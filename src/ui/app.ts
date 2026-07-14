@@ -1,19 +1,39 @@
 import {
+  AI_FREE_DIALOGUE_QUESTION_ID,
+  applyAiTestimony,
   askFreeText,
   askScriptedQuestion,
   confront,
   createInitialGameState,
   startInterrogation,
 } from "../core/stateMachine";
-import type { CaseBundle, EmotionState, GameState } from "../core/types";
+import type { CaseBundle, EmotionState, EndingId, GameState } from "../core/types";
 import { loadCase } from "../data/caseLoader";
 import { recordEnding } from "../persistence/saveStore";
+import { loadSettings, saveSettings } from "../persistence/settingsStore";
+import type { Settings } from "../persistence/settingsStore";
+import { initAudio, playSe, setMuted, startBgm } from "../audio/engine";
+import { createSuspectView } from "./suspectCanvas";
+import type { SuspectView } from "./suspectCanvas";
+import { renderSettingsScreen } from "./settingsScreen";
+import type { OllamaStatus, SettingsScreenActions, SettingsScreenState } from "./settingsScreen";
+import { AIProviderRouter } from "../ai/AIProviderRouter";
+import { GeminiBYOKProvider } from "../ai/GeminiBYOKProvider";
+import { OllamaLocalProvider } from "../ai/OllamaLocalProvider";
+import type { TestimonyRequest } from "../ai/AIProvider";
 
 interface UiState {
   bundle: CaseBundle;
   game: GameState;
   selectedTestimonyTurn: number | null;
   breakdownMessage: string | null;
+  settings: Settings;
+  settingsOpen: boolean;
+  settingsApiKeyDraft: string;
+  settingsShowApiKey: boolean;
+  ollamaStatus: OllamaStatus;
+  aiLoading: boolean;
+  aiFallbackNotice: string | null;
 }
 
 const EMOTION_LABEL: Record<EmotionState, string> = {
@@ -30,16 +50,47 @@ const ENDING_LABEL: Record<string, string> = {
 
 let ui: UiState;
 let root: HTMLElement;
+let suspectView: SuspectView | null = null;
+let suspectCanvasWrap: HTMLElement | null = null;
+let audioInitialized = false;
 
 export function mountApp(rootEl: HTMLElement): void {
   root = rootEl;
   const bundle = loadCase("case-001");
+  const settings = loadSettings();
+
   ui = {
     bundle,
     game: createInitialGameState(bundle),
     selectedTestimonyTurn: null,
     breakdownMessage: null,
+    settings,
+    settingsOpen: false,
+    settingsApiKeyDraft: settings.geminiApiKey,
+    settingsShowApiKey: false,
+    ollamaStatus: "checking",
+    aiLoading: false,
+    aiFallbackNotice: null,
   };
+
+  // setMuted is a safe no-op before initAudio(); it still records the
+  // desired mute state so it applies correctly once audio does init.
+  setMuted(ui.settings.muted);
+
+  suspectCanvasWrap = el("div", { className: "suspect-canvas-wrap" });
+  suspectView = createSuspectView(suspectCanvasWrap);
+  suspectView.setEmotion(ui.game.emotionState);
+
+  root.addEventListener(
+    "pointerdown",
+    () => {
+      if (audioInitialized) return;
+      audioInitialized = true;
+      initAudio();
+    },
+    { capture: true, once: true },
+  );
+
   render();
 }
 
@@ -70,13 +121,110 @@ function render(): void {
   }
 
   root.appendChild(container);
+
+  if (ui.settingsOpen) {
+    root.appendChild(renderSettingsOverlay());
+  }
 }
 
 function renderHeader(): HTMLElement {
   const header = el("header", { className: "app-header" });
-  header.appendChild(el("h1", { text: "尋問 -JINMON- (プロトタイプ／P1)" }));
-  header.appendChild(el("p", { className: "case-title", text: ui.bundle.case.title }));
+
+  const titleBlock = el("div", { className: "app-header-title" });
+  titleBlock.appendChild(el("h1", { text: "尋問 -JINMON- (プロトタイプ／P2)" }));
+  titleBlock.appendChild(el("p", { className: "case-title", text: ui.bundle.case.title }));
+  header.appendChild(titleBlock);
+
+  const controls = el("div", { className: "app-header-controls" });
+
+  const muteBtn = el("button", {
+    className: "header-icon-btn",
+    text: ui.settings.muted ? "🔇" : "🔊",
+  });
+  muteBtn.type = "button";
+  muteBtn.setAttribute("aria-label", "ミュート切り替え");
+  muteBtn.addEventListener("click", () => {
+    setMutedAndPersist(!ui.settings.muted);
+    render();
+  });
+  controls.appendChild(muteBtn);
+
+  const settingsBtn = el("button", { className: "header-icon-btn", text: "⚙" });
+  settingsBtn.type = "button";
+  settingsBtn.setAttribute("aria-label", "設定を開く");
+  settingsBtn.addEventListener("click", () => openSettings());
+  controls.appendChild(settingsBtn);
+
+  header.appendChild(controls);
   return header;
+}
+
+function setMutedAndPersist(muted: boolean): void {
+  ui.settings = { ...ui.settings, muted };
+  setMuted(muted);
+  saveSettings(ui.settings);
+}
+
+function openSettings(): void {
+  ui.settingsOpen = true;
+  ui.settingsApiKeyDraft = ui.settings.geminiApiKey;
+  ui.settingsShowApiKey = false;
+  ui.ollamaStatus = "checking";
+  render();
+
+  const ollama = new OllamaLocalProvider();
+  void ollama.isAvailable().then((available) => {
+    ui.ollamaStatus = available ? "detected" : "not_detected";
+    if (ui.settingsOpen) render();
+  });
+}
+
+function renderSettingsOverlay(): HTMLElement {
+  const state: SettingsScreenState = {
+    settings: ui.settings,
+    apiKeyDraft: ui.settingsApiKeyDraft,
+    showApiKey: ui.settingsShowApiKey,
+    ollamaStatus: ui.ollamaStatus,
+  };
+
+  const actions: SettingsScreenActions = {
+    onApiKeyDraftChange(value: string) {
+      // Intentionally does not re-render: the draft only needs to be
+      // captured for the Save click. Re-rendering on every keystroke would
+      // rebuild the whole DOM tree (see render()) and drop input focus.
+      ui.settingsApiKeyDraft = value;
+    },
+    onToggleShowApiKey() {
+      ui.settingsShowApiKey = !ui.settingsShowApiKey;
+      render();
+    },
+    onSaveApiKey() {
+      ui.settings = { ...ui.settings, geminiApiKey: ui.settingsApiKeyDraft.trim() };
+      saveSettings(ui.settings);
+      render();
+    },
+    onToggleAiDialogue() {
+      if (ui.settings.geminiApiKey.trim().length === 0) return;
+      ui.settings = { ...ui.settings, aiDialogueEnabled: !ui.settings.aiDialogueEnabled };
+      saveSettings(ui.settings);
+      render();
+    },
+    onToggleStreamerMode() {
+      ui.settings = { ...ui.settings, streamerMode: !ui.settings.streamerMode };
+      saveSettings(ui.settings);
+      render();
+    },
+    onToggleMuted() {
+      setMutedAndPersist(!ui.settings.muted);
+      render();
+    },
+    onClose() {
+      ui.settingsOpen = false;
+      render();
+    },
+  };
+
+  return renderSettingsScreen(state, actions);
 }
 
 function renderBriefing(): HTMLElement {
@@ -90,6 +238,7 @@ function renderBriefing(): HTMLElement {
   const startBtn = el("button", { className: "primary", text: "尋問を開始する" });
   startBtn.addEventListener("click", () => {
     ui.game = startInterrogation(ui.game);
+    startBgm("interrogation");
     render();
   });
   section.appendChild(startBtn);
@@ -114,9 +263,10 @@ function renderSuspectPanel(): HTMLElement {
   const panel = el("div", { className: `panel suspect-panel emotion-${ui.game.emotionState}` });
   panel.appendChild(el("h2", { text: "容疑者" }));
 
-  const silhouette = el("div", { className: "placeholder-silhouette" });
-  silhouette.title = "仮アセット（後日差し替え予定）";
-  panel.appendChild(silhouette);
+  suspectView?.setEmotion(ui.game.emotionState);
+  if (suspectCanvasWrap) {
+    panel.appendChild(suspectCanvasWrap);
+  }
 
   panel.appendChild(
     el("p", { className: "emotion-label", text: `感情: ${EMOTION_LABEL[ui.game.emotionState]}` }),
@@ -133,15 +283,71 @@ function renderSuspectPanel(): HTMLElement {
   return panel;
 }
 
+function aiDialogueActive(): boolean {
+  return ui.settings.aiDialogueEnabled && ui.settings.geminiApiKey.trim().length > 0;
+}
+
+function buildAiRequest(playerUtterance: string): TestimonyRequest {
+  const disclosedEvidenceSummaries = ui.bundle.evidence
+    .filter((e) => ui.game.disclosedEvidenceIds.includes(e.evidenceId))
+    .map((e) => `${e.name}: ${e.description}`);
+
+  return {
+    aiProfile: ui.bundle.aiProfile,
+    emotionState: ui.game.emotionState,
+    disclosedEvidenceSummaries,
+    recentTestimonies: ui.game.testimonyLog.slice(-5).map((t) => t.text),
+    playerUtterance,
+  };
+}
+
+function fallbackNoticeFor(reason: string | null): string {
+  if (reason === "rate_limit") return "(APIレート制限のため定型応答)";
+  return "(通信不安定のため定型応答)";
+}
+
+async function sendAiFreeText(value: string): Promise<void> {
+  ui.aiLoading = true;
+  ui.aiFallbackNotice = null;
+  render();
+
+  const router = new AIProviderRouter([new GeminiBYOKProvider(ui.settings.geminiApiKey), new OllamaLocalProvider()], {
+    streamerMode: ui.settings.streamerMode,
+  });
+
+  const routed = await router.generateTestimony(buildAiRequest(value));
+  ui.aiLoading = false;
+
+  if (routed.response !== null) {
+    ui.game = applyAiTestimony(ui.game, ui.bundle, {
+      lineText: routed.response.lineText,
+      emotionDelta: routed.response.emotionDelta,
+    });
+    ui.aiFallbackNotice = null;
+  } else {
+    ui.game = askFreeText(ui.game, ui.bundle, value);
+    ui.aiFallbackNotice = fallbackNoticeFor(routed.fallbackReason);
+  }
+
+  playSe("testimony_appear");
+  afterGameStateChange();
+}
+
 function renderDialoguePanel(): HTMLElement {
   const panel = el("div", { className: "panel dialogue-panel" });
   panel.appendChild(el("h2", { text: "尋問" }));
 
+  const inputsDisabled = ui.aiLoading;
+
   const questionList = el("div", { className: "question-list" });
   for (const q of ui.bundle.questions) {
     const btn = el("button", { className: "question-btn", text: q.label });
+    btn.disabled = inputsDisabled;
     btn.addEventListener("click", () => {
+      ui.aiFallbackNotice = null;
+      playSe("question_send");
       ui.game = askScriptedQuestion(ui.game, ui.bundle, q.questionId);
+      playSe("testimony_appear");
       afterGameStateChange();
     });
     questionList.appendChild(btn);
@@ -152,17 +358,35 @@ function renderDialoguePanel(): HTMLElement {
   const input = el("input", { className: "free-text-input" });
   input.setAttribute("type", "text");
   input.setAttribute("placeholder", "自由に質問を入力…");
+  input.disabled = inputsDisabled;
   const submitBtn = el("button", { text: "質問する" });
+  submitBtn.disabled = inputsDisabled;
   freeTextForm.appendChild(input);
   freeTextForm.appendChild(submitBtn);
   freeTextForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (ui.aiLoading) return;
     const value = input.value.trim();
     if (!value) return;
-    ui.game = askFreeText(ui.game, ui.bundle, value);
-    afterGameStateChange();
+
+    ui.aiFallbackNotice = null;
+    playSe("question_send");
+
+    if (aiDialogueActive()) {
+      void sendAiFreeText(value);
+    } else {
+      ui.game = askFreeText(ui.game, ui.bundle, value);
+      playSe("testimony_appear");
+      afterGameStateChange();
+    }
   });
   panel.appendChild(freeTextForm);
+
+  if (ui.aiLoading) {
+    panel.appendChild(el("p", { className: "ai-loading", text: "……容疑者が考えている……" }));
+  } else if (ui.aiFallbackNotice) {
+    panel.appendChild(el("p", { className: "ai-fallback-notice", text: ui.aiFallbackNotice }));
+  }
 
   panel.appendChild(renderTestimonyLog());
 
@@ -184,13 +408,18 @@ function renderTestimonyLog(): HTMLElement {
       className: `testimony-entry ${ui.selectedTestimonyTurn === entry.turn ? "selected" : ""}`,
     });
     item.appendChild(el("span", { className: "turn-no", text: `#${entry.turn}` }));
+    if (entry.questionId === AI_FREE_DIALOGUE_QUESTION_ID) {
+      item.appendChild(el("span", { className: "ai-badge", text: "AI" }));
+    }
     item.appendChild(el("span", { className: "testimony-text", text: entry.text }));
     if (entry.contradictionResolved) {
       item.appendChild(el("span", { className: "resolved-badge", text: "崩壊済" }));
     } else if (entry.lieId) {
       const selectBtn = el("button", { className: "confront-select-btn", text: "この供述を追及" });
       selectBtn.addEventListener("click", () => {
-        ui.selectedTestimonyTurn = ui.selectedTestimonyTurn === entry.turn ? null : entry.turn;
+        const wasSelected = ui.selectedTestimonyTurn === entry.turn;
+        ui.selectedTestimonyTurn = wasSelected ? null : entry.turn;
+        if (!wasSelected) playSe("confront_select");
         render();
       });
       item.appendChild(selectBtn);
@@ -216,7 +445,7 @@ function renderEvidencePanel(): HTMLElement {
     if (ui.selectedTestimonyTurn !== null) {
       const confrontBtn = el("button", { className: "confront-btn", text: "この証拠を突きつける" });
       confrontBtn.addEventListener("click", () => {
-        handleConfront(evidence.evidenceId);
+        void handleConfront(evidence.evidenceId);
       });
       card.appendChild(confrontBtn);
     }
@@ -227,7 +456,7 @@ function renderEvidencePanel(): HTMLElement {
   return panel;
 }
 
-function handleConfront(evidenceId: string): void {
+async function handleConfront(evidenceId: string): Promise<void> {
   if (ui.selectedTestimonyTurn === null) return;
   const turn = ui.selectedTestimonyTurn;
   const wasResolved = ui.game.testimonyLog.find((t) => t.turn === turn)?.contradictionResolved;
@@ -236,10 +465,20 @@ function handleConfront(evidenceId: string): void {
   ui.selectedTestimonyTurn = null;
 
   const nowResolved = ui.game.testimonyLog.find((t) => t.turn === turn)?.contradictionResolved;
+
   if (!wasResolved && nowResolved) {
+    // confront_success's preset stops the BGM automatically (stopBgmFirst).
+    playSe("confront_success");
+    if (suspectView) {
+      await suspectView.playBreakdown();
+    }
     ui.breakdownMessage = "供述が崩れた……。";
+    afterGameStateChange();
+    startBgm("silence");
+    return;
   }
 
+  playSe("confront_fail");
   afterGameStateChange();
 }
 
@@ -249,10 +488,17 @@ function renderBreakdownOverlay(): HTMLElement {
   const continueBtn = el("button", { text: "続ける" });
   continueBtn.addEventListener("click", () => {
     ui.breakdownMessage = null;
+    startBgm("interrogation");
     render();
   });
   overlay.appendChild(continueBtn);
   return overlay;
+}
+
+function playEndingSe(endingId: EndingId): void {
+  if (endingId === "true_confession") playSe("ending_true");
+  else if (endingId === "wrongful_conviction") playSe("ending_bad");
+  else playSe("ending_released");
 }
 
 function renderEnding(): HTMLElement {
@@ -271,6 +517,7 @@ function renderEnding(): HTMLElement {
     ui.game = createInitialGameState(ui.bundle);
     ui.selectedTestimonyTurn = null;
     ui.breakdownMessage = null;
+    suspectView?.setEmotion(ui.game.emotionState);
     render();
   });
   section.appendChild(restartBtn);
@@ -281,6 +528,12 @@ function renderEnding(): HTMLElement {
 function afterGameStateChange(): void {
   if (ui.game.currentPhase === "ending" && ui.game.endingId) {
     recordEnding(ui.game.caseId, ui.game.endingId);
+    playEndingSe(ui.game.endingId);
   }
+
+  if (ui.game.currentPhase === "interrogation" && !ui.breakdownMessage) {
+    startBgm(ui.game.emotionState === "shaken" ? "tension" : "interrogation");
+  }
+
   render();
 }
