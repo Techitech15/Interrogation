@@ -1,0 +1,35 @@
+[
+  {
+    "questionId": "Q-ALIBI-01",
+    "category": "alibi",
+    "label": "事件当夜、どこにいましたか",
+    "freeTextKeywords": ["アリバイ", "どこ", "夜", "23時", "場所", "会った"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-WEAPON-01",
+    "category": "weapon",
+    "label": "凶器の包丁に触れましたか",
+    "freeTextKeywords": ["凶器", "包丁", "触れ", "洗", "血"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-CHITCHAT-01",
+    "category": "chitchat",
+    "label": "(世間話をする)",
+    "freeTextKeywords": ["天気", "家族", "趣味", "最近", "調子"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  }
+]

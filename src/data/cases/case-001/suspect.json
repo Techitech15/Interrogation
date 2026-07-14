@@ -1,0 +1,24 @@
+{
+  "suspectId": "suspect-001",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "被害者と会ったのは23時ではなく、21時だった",
+    "TR-02": "凶器の包丁を洗ってから元の場所に戻した"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの夜は、被害者とは一度も会っていません。家にひとりでいました。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "凶器と言われても……あの包丁には、触れてすらいません。",
+      "contradictingEvidenceIds": ["EV-01"]
+    }
+  ]
+}

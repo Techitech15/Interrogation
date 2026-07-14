@@ -1,0 +1,23 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "鑑識報告書",
+    "description": "凶器の包丁から洗浄された形跡と、柄に付着した微量の血液反応が検出されたと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "被害者の同僚の証言メモ",
+    "description": "被害者は当夜、『21時に人が来る』と話していたという、同僚からの伝聞メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "防犯カメラの記録",
+    "description": "事件当夜21時、被害者宅そばの路地を通る、容疑者と背格好の似た人物の映像。時刻表示が焼き込まれている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

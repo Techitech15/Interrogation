@@ -1,0 +1,14 @@
+{
+  "caseId": "case-001",
+  "title": "深夜の密室",
+  "isFreeDemo": true,
+  "detentionLimitMinutes": 2880,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は自宅居間にて刺殺体で発見された。死亡推定時刻は当夜23時前後。争った形跡は少なく、顔見知りによる犯行と見られる。",
+    "initialMemo": "第一発見者は被害者の同僚。自宅の合鍵を持つ人物として、交際関係にあった容疑者が任意同行された。容疑者は当初、当夜は被害者に会っていないと主張している。"
+  },
+  "suspectId": "suspect-001",
+  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "wrongfulPressureThreshold": 3
+}
