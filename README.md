@@ -11,6 +11,14 @@
 - 装飾なしの最小UI。容疑者シルエット・背景等の画像アセットはすべて**仮**(`public/assets/README.md`参照。後日 Codex 側で生成した画像に差し替え予定)
 - サンプル事件1件(`case-001` 深夜の密室)
 
+## 公開先(GitHub Pages)
+
+`.github/workflows/deploy-pages.yml` により、`claude/inquiry-game-design-spec-gtt9mp` ブランチへのpush時に自動でビルド・テストしてGitHub Pagesへデプロイされる。
+
+- 公開URL: https://techitech15.github.io/Interrogation/
+- 初回のみ、リポジトリの **Settings → Pages → Build and deployment → Source** が `GitHub Actions` になっていることを確認する(ワークフローが自動で有効化を試みるが、組織設定によっては手動確認が必要な場合がある)
+- `vite.config.ts` の `base` はこのURLのサブパス(`/Interrogation/`)に合わせて本番ビルド時のみ設定している。ローカル開発(`npm run dev`)には影響しない
+
 ## セットアップ
 
 ```bash
