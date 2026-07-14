@@ -2,6 +2,7 @@ export const TIME_COST = {
   scriptedQuestion: 30,
   freeTextMatched: 30,
   freeTextUnmatched: 45,
+  aiFreeDialogue: 30,
   confrontationCorrect: 60,
   confrontationWrong: 120,
   evidenceReview: 0,

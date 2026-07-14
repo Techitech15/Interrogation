@@ -3,6 +3,7 @@ import suspectJson from "./cases/case-001/suspect.json";
 import questionsJson from "./cases/case-001/questions.json";
 import evidenceJson from "./cases/case-001/evidence.json";
 import responseTextsJson from "./cases/case-001/responseTexts.json";
+import aiProfileJson from "./cases/case-001/aiProfile.json";
 import type { CaseBundle } from "../core/types";
 
 const bundles: Record<string, CaseBundle> = {
@@ -12,6 +13,7 @@ const bundles: Record<string, CaseBundle> = {
     questions: questionsJson as CaseBundle["questions"],
     evidence: evidenceJson as CaseBundle["evidence"],
     responseTexts: responseTextsJson as CaseBundle["responseTexts"],
+    aiProfile: aiProfileJson as CaseBundle["aiProfile"],
   },
 };
 

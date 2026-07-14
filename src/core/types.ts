@@ -57,6 +57,13 @@ export interface ResponseText {
   [responseTextId: string]: string;
 }
 
+export interface AiProfile {
+  caseSummaryForAI: string;
+  knownFactsForSuspect: string[];
+  liesToMaintain: string[];
+  bannedKeywords: string[];
+}
+
 export interface Case {
   caseId: string;
   title: string;
@@ -78,6 +85,7 @@ export interface CaseBundle {
   questions: Question[];
   evidence: Evidence[];
   responseTexts: ResponseText;
+  aiProfile: AiProfile;
 }
 
 export interface TestimonyEntry {

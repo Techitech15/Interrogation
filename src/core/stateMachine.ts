@@ -2,7 +2,7 @@ import { resolveDialogue, DEFAULT_RESPONSE_TEXT_ID } from "./dialogueResolver";
 import { matchFreeText } from "./freeTextMatcher";
 import { judgeContradiction } from "./contradictionJudge";
 import { evaluateEnding } from "./endingEvaluator";
-import { applyCorrectConfrontation, applyWrongConfrontation, deriveEmotion } from "./emotionFSM";
+import { applyCorrectConfrontation, applyWrongConfrontation, clampScore, deriveEmotion } from "./emotionFSM";
 import { consumeTime, TIME_COST } from "./detentionClock";
 import type { CaseBundle, GameState, Question } from "./types";
 
@@ -100,6 +100,43 @@ export function askFreeText(state: GameState, bundle: CaseBundle, input: string)
   }
 
   return applyQuestion(state, bundle, match.question, TIME_COST.freeTextMatched);
+}
+
+export const AI_FREE_DIALOGUE_QUESTION_ID = "AI-FREE";
+
+export interface AiTestimonyInput {
+  lineText: string;
+  emotionDelta: -1 | 0 | 1;
+}
+
+/**
+ * Records a testimony produced by an AI provider (Layer B/C free dialogue).
+ * AI lines never carry a lieId — achievements/endings stay driven by Layer A
+ * data only, per the design doc's "AI出力に依存させない" rule.
+ */
+export function applyAiTestimony(state: GameState, bundle: CaseBundle, input: AiTestimonyInput): GameState {
+  if (state.currentPhase !== "interrogation") return state;
+
+  const turn = state.turn + 1;
+  const emotionScore = clampScore(state.emotionScore + input.emotionDelta);
+  const nextState: GameState = {
+    ...state,
+    turn,
+    emotionScore,
+    emotionState: deriveEmotion(emotionScore),
+    testimonyLog: [
+      ...state.testimonyLog,
+      {
+        turn,
+        questionId: AI_FREE_DIALOGUE_QUESTION_ID,
+        text: input.lineText,
+        emotionAtTime: state.emotionState,
+        contradictionResolved: false,
+      },
+    ],
+    detentionRemainingMinutes: consumeTime(state.detentionRemainingMinutes, TIME_COST.aiFreeDialogue),
+  };
+  return withEndingCheck(nextState, bundle);
 }
 
 export function confront(state: GameState, bundle: CaseBundle, testimonyTurn: number, evidenceId: string): GameState {
