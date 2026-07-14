@@ -1,0 +1,20 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "防犯カメラ映像",
+    "description": "21時12分、容疑者が被害者の事務所へ入る姿が映っている。",
+    "unlockedFrom": "briefing"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "洗面台の血液反応",
+    "description": "書斎の洗面台から被害者と一致する血液と、洗浄剤の痕跡が検出された。",
+    "unlockedFrom": "briefing"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "共同経営契約書",
+    "description": "被害者と容疑者の利益配分を定めた契約書。事件直前の変更案が添付されている。",
+    "unlockedFrom": "briefing"
+  }
+]

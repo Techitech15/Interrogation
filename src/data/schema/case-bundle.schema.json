@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case", "suspect", "questions", "evidence", "responses"],
+  "properties": {
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "title",
+        "isFreeDemo",
+        "detentionLimitMinutes",
+        "briefing",
+        "suspectId",
+        "endings",
+        "hiddenCaseUnlockFlag"
+      ],
+      "properties": {
+        "caseId": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "isFreeDemo": { "type": "boolean" },
+        "detentionLimitMinutes": { "type": "integer", "minimum": 1 },
+        "wrongfulPressureThreshold": { "type": "integer", "minimum": 1 },
+        "briefing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scenePhotos", "autopsyReport", "initialMemo"],
+          "properties": {
+            "scenePhotos": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "autopsyReport": { "type": "string", "minLength": 1 },
+            "initialMemo": { "type": "string", "minLength": 1 }
+          }
+        },
+        "suspectId": { "type": "string", "minLength": 1 },
+        "endings": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["wrongful_conviction", "true_confession", "released"]
+          }
+        },
+        "hiddenCaseUnlockFlag": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "suspect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suspectId",
+        "name",
+        "silhouetteAssetSet",
+        "initialEmotion",
+        "truthTable",
+        "lieTable"
+      ],
+      "properties": {
+        "suspectId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "silhouetteAssetSet": { "type": "string", "minLength": 1 },
+        "initialEmotion": { "$ref": "#/definitions/emotion" },
+        "truthTable": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "lieTable": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lieId",
+              "relatedTruthId",
+              "text",
+              "contradictingEvidenceIds"
+            ],
+            "properties": {
+              "lieId": { "type": "string", "minLength": 1 },
+              "relatedTruthId": { "type": "string", "minLength": 1 },
+              "text": { "type": "string", "minLength": 1 },
+              "contradictingEvidenceIds": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "requiredEmotionNotIn": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": { "$ref": "#/definitions/emotion" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "questionId",
+          "category",
+          "label",
+          "freeTextKeywords",
+          "responseTable"
+        ],
+        "properties": {
+          "questionId": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "label": { "type": "string", "minLength": 1 },
+          "freeTextKeywords": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "responseTable": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "emotion",
+                "requiredEvidenceIds",
+                "responseTextId"
+              ],
+              "properties": {
+                "emotion": { "$ref": "#/definitions/emotion" },
+                "requiredEvidenceIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "type": "string", "minLength": 1 }
+                },
+                "responseTextId": { "type": "string", "minLength": 1 },
+                "lieId": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidenceId",
+          "name",
+          "description",
+          "unlockedFrom"
+        ],
+        "properties": {
+          "evidenceId": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "unlockedFrom": { "type": "string", "minLength": 1 },
+          "imageAsset": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "responses": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 },
+      "required": ["RESP-REFUSE-DEFAULT"]
+    }
+  },
+  "definitions": {
+    "emotion": {
+      "enum": ["calm", "shaken", "hardened"]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "suspectId": "suspect-001",
+  "name": "霧島 廉",
+  "silhouetteAssetSet": "suspect-001-poses",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "被害者と会ったのは21時だった",
+    "TR-02": "書斎の洗面台で血の付いたペーパーナイフを洗った"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "事件当夜は被害者に会わず、ずっと自宅にいた",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "書斎の洗面台には触れていない",
+      "contradictingEvidenceIds": ["EV-02"]
+    }
+  ]
+}

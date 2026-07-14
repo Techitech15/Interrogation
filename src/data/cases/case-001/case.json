@@ -1,0 +1,15 @@
+{
+  "caseId": "case-001",
+  "title": "深夜の密室",
+  "isFreeDemo": true,
+  "detentionLimitMinutes": 2880,
+  "wrongfulPressureThreshold": 3,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は書斎で死亡。死亡推定時刻は21時から22時。室内に争った跡はなく、洗面台から微量の血液反応が出た。",
+    "initialMemo": "容疑者は被害者の共同経営者。事件当夜は自宅にいたと主張している。防犯カメラと洗面台の検査結果を確認せよ。"
+  },
+  "suspectId": "suspect-001",
+  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "hiddenCaseUnlockFlag": null
+}

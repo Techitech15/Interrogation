@@ -1,0 +1,13 @@
+{
+  "RESP-REFUSE-DEFAULT": "その質問には答える必要がないと思います。",
+  "RESP-ALIBI-CALM": "事件当夜は自宅にいました。被害者とは会っていません。",
+  "RESP-ALIBI-SHAKEN": "自宅です。……事務所になんて、行っていません。",
+  "RESP-ALIBI-HARDENED": "何度聞かれても同じです。自宅にいました。",
+  "RESP-SINK-CALM": "書斎の洗面台には触れていません。そもそも書斎に入っていない。",
+  "RESP-SINK-SHAKEN": "洗面台？　知りません。なぜそこを調べたんです。",
+  "RESP-SINK-HARDENED": "触れていないと言ったはずです。",
+  "RESP-MOTIVE-DISCLOSED": "契約の変更案には反対でした。でも、それだけで殺人の動機になるんですか。",
+  "RESP-MOTIVE-CALM": "仕事上の意見の違いはありましたが、よくあることです。",
+  "RESP-MOTIVE-SHAKEN": "揉めてなど……変更案について少し話しただけです。",
+  "RESP-MOTIVE-HARDENED": "仕事の話を事件に結びつけるのはやめてください。"
+}

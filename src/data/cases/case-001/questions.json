@@ -1,0 +1,77 @@
+[
+  {
+    "questionId": "Q-ALIBI-01",
+    "category": "alibi",
+    "label": "事件当夜、どこにいましたか",
+    "freeTextKeywords": ["アリバイ", "どこ", "事件当夜"],
+    "responseTable": [
+      {
+        "emotion": "calm",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-ALIBI-CALM",
+        "lieId": "LIE-01"
+      },
+      {
+        "emotion": "shaken",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-ALIBI-SHAKEN",
+        "lieId": "LIE-01"
+      },
+      {
+        "emotion": "hardened",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-ALIBI-HARDENED",
+        "lieId": "LIE-01"
+      }
+    ]
+  },
+  {
+    "questionId": "Q-SINK-01",
+    "category": "crime_scene",
+    "label": "書斎の洗面台を使いましたか",
+    "freeTextKeywords": ["洗面台", "書斎", "血液"],
+    "responseTable": [
+      {
+        "emotion": "calm",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-SINK-CALM",
+        "lieId": "LIE-02"
+      },
+      {
+        "emotion": "shaken",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-SINK-SHAKEN",
+        "lieId": "LIE-02"
+      },
+      {
+        "emotion": "hardened",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-SINK-HARDENED",
+        "lieId": "LIE-02"
+      }
+    ]
+  },
+  {
+    "questionId": "Q-MOTIVE-01",
+    "category": "motive",
+    "label": "被害者と揉めていましたか",
+    "freeTextKeywords": ["動機", "揉め", "共同経営"],
+    "responseTable": [
+      {
+        "emotion": "calm",
+        "requiredEvidenceIds": ["EV-03"],
+        "responseTextId": "RESP-MOTIVE-DISCLOSED"
+      },
+      {
+        "emotion": "shaken",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-MOTIVE-SHAKEN"
+      },
+      {
+        "emotion": "hardened",
+        "requiredEvidenceIds": [],
+        "responseTextId": "RESP-MOTIVE-HARDENED"
+      }
+    ]
+  }
+]
