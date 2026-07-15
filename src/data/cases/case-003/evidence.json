@@ -1,0 +1,37 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "鑑識報告書",
+    "description": "被害者のグラスと血液から、市販の胃腸薬ではなく処方睡眠導入剤の成分が高濃度で検出されたと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "店員の証言メモ",
+    "description": "乾杯の直後、容疑者が席を立ち、被害者の席の近くで一瞬立ち止まる様子を見たという店員の証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "薬局のレシートと防犯カメラ映像",
+    "description": "事件当日15時、容疑者と思われる人物が該当の睡眠導入剤を購入した記録。レシートの時刻と映像の時刻表示が一致する。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "被害者の手帳",
+    "description": "金銭の貸し借りに関する書き込みが並ぶ手帳。複数のページの末尾に「M」の一文字が記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "容疑者のスマートフォンのメッセージ履歴",
+    "description": "被害者との間で交わされた、金銭の無心とその返済に関するやり取り。「M」を通じて借りた分、という表現が残っている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "suspectId": "suspect-002",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "閉店後、一度だけ21時半ごろに店へ戻った",
+    "TR-02": "工具箱のスパナを素手で握り、その後布で拭って戻した",
+    "TR-03": "被害者が借金の取り立ての電話を受けていたことを知っていた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "閉店後はまっすぐ家に帰りました。店には戻っていません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "工具箱のスパナですか……いえ、あれには触れていません。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "店主が借金の取り立てで電話を受けていたなんて、知りませんでした。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "caseId": "case-004",
+  "title": "帳簿の続き",
+  "isFreeDemo": false,
+  "detentionLimitMinutes": 2880,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は深夜、河川敷の遊歩道で頸部を圧迫された痕のある状態で発見された。死亡推定時刻は23時から24時の間。着衣の乱れと争った形跡があり、周辺から出所不明の革手袋の繊維片が採取されている。所持品に大きな物盗られた形跡はなく、他殺と断定された。",
+    "initialMemo": "被害者は消息を絶っていた知人を追う中で、闇金融の取り立てに関する情報を集めていた人物と見られる。当夜、何者かと会う約束をしていた形跡があり、スマートフォンには短いやり取りが残っていた。任意同行された容疑者は、当初被害者との面識自体を否定している。周辺で未解決となっている複数の取り立て絡みの事件との関連が指摘されている。"
+  },
+  "suspectId": "suspect-004",
+  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": "all_true_confessions"
+}

@@ -200,7 +200,7 @@ function renderHeader(): HTMLElement {
   const h1 = el("h1");
   const titleBtn = el("button", {
     className: "app-header-title-btn",
-    text: "尋問 -JINMON- (プロトタイプ／P2)",
+    text: "尋問 -JINMON- (プロトタイプ)",
   });
   titleBtn.type = "button";
   titleBtn.setAttribute("aria-label", "タイトルへ戻る");

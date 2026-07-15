@@ -1,0 +1,15 @@
+{
+  "caseId": "case-002",
+  "title": "工具箱の沈黙",
+  "isFreeDemo": false,
+  "detentionLimitMinutes": 2880,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は自ら営む自転車店の作業場で、後頭部を鈍器で殴打され死亡しているのを発見された。死亡推定時刻は当日21時から22時の間。現場の工具箱は中身が散乱し、凶器とみられるスパナの柄には拭き取られたような跡が残っていた。抵抗した形跡は少なく、被害者は加害者を警戒していなかった可能性が高い。",
+    "initialMemo": "第一発見者は翌朝、開店準備に来た被害者の妻。合鍵で店に入り、作業場で倒れている被害者を発見し通報した。当時従業員として働いていた容疑者は、当夜は定時で退勤し以後は店に戻っていないと供述している。被害者の帳簿には金銭のやり取りを示す書き込みが多数あり、末尾に丸で囲んだ「M」の印が繰り返し記されている。関係は不明。"
+  },
+  "suspectId": "suspect-002",
+  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
+}

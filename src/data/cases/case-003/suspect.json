@@ -1,0 +1,33 @@
+{
+  "suspectId": "suspect-003",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "乾杯の後、一度だけ被害者の席の近くに移動し、グラスに手を伸ばした",
+    "TR-02": "事件当日の午後、薬局で睡眠導入剤を買っていた",
+    "TR-03": "被害者から金の無心を受けたことがあり、被害者を通じて「M」という貸主とのやり取りを知っていた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "ずっと自分の席に座っていました。被害者のグラスには近づいていません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "薬局で何かを買った覚えはありません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "被害者とお金の話をしたことなんて、一度もありません。",
+      "contradictingEvidenceIds": ["EV-05"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

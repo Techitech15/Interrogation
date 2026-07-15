@@ -1,0 +1,41 @@
+{
+  "suspectId": "suspect-004",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "事件当夜、指定された時刻に被害者と会う約束をしていた",
+    "TR-02": "被害者ともみ合いになり、口をふさぐために手を下した",
+    "TR-03": "「M」と呼ばれる人物からの指示で被害者に接触していた",
+    "TR-04": "被害者以外にも、複数の債務者のもとを取り立てのために訪れたことがある"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの人とは面識がありません。会ったこともない。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "争いなんて起きていません。手を出してもいません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "誰の指示も受けていません。全部、自分ひとりでやったことです。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "こういう仕事は初めてです。他の人のところに行ったことなんてありません。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

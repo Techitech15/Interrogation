@@ -1,0 +1,15 @@
+{
+  "caseId": "case-003",
+  "title": "乾杯の後で",
+  "isFreeDemo": false,
+  "detentionLimitMinutes": 2880,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は取引先との懇親会の席上で嘔吐・痙攣の後に意識を失い、搬送先の病院で死亡が確認された。血液および胃内容物から市販薬とは異なる処方薬由来の成分が検出され、致死量に達していたと判明した。被害者が使用していたグラスからも同一成分が検出されている。",
+    "initialMemo": "懇親会は取引先を交えた10名ほどの席で、被害者のグラスには乾杯後しばらく口をつけられていない時間帯があったと店員が証言している。同席していた容疑者は当初、被害者のグラスに近づいた事実自体を否定している。被害者の手帳には金銭の貸し借りに関するとみられる記述があり、末尾に「M」の一文字が記されたページが複数見つかっている。"
+  },
+  "suspectId": "suspect-003",
+  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
+}

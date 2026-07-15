@@ -1,0 +1,68 @@
+[
+  {
+    "questionId": "Q-ALIBI-01",
+    "category": "alibi",
+    "label": "閉店後、どこにいましたか",
+    "freeTextKeywords": ["アリバイ", "閉店後", "帰った", "戻った", "21時", "夜"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-TOOL-01",
+    "category": "weapon",
+    "label": "工具箱のスパナに触れましたか",
+    "freeTextKeywords": ["スパナ", "工具箱", "凶器", "触れ", "拭き"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-DEBT-01",
+    "category": "motive",
+    "label": "店主が借金の取り立てを受けていたのを知っていましたか",
+    "freeTextKeywords": ["借金", "取り立て", "電話", "M", "金"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-03" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-03", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-RELATION-01",
+    "category": "relationship",
+    "label": "店主とはどんな関係でしたか",
+    "freeTextKeywords": ["関係", "店主", "師弟", "仕事", "給料"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-VICTIM-01",
+    "category": "victim",
+    "label": "最近の店主の様子はどうでしたか",
+    "freeTextKeywords": ["様子", "最近", "店主", "変わった", "電話"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-CHITCHAT-01",
+    "category": "chitchat",
+    "label": "(世間話をする)",
+    "freeTextKeywords": ["天気", "趣味", "最近", "調子", "休み"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  }
+]

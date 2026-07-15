@@ -1,0 +1,37 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "被害者のスマートフォンのメッセージ履歴",
+    "description": "事件当夜の待ち合わせ時刻・場所を取り決めるやり取りが残っている。相手の登録名はなく、番号のみが表示されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "現場で採取された革手袋の繊維片",
+    "description": "現場に残された繊維片が、容疑者が任意同行時に所持していた革手袋のものと一致するとの鑑識報告書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "容疑者の携帯電話の通話履歴",
+    "description": "「M」とのみ登録された番号との通話記録が繰り返し残っている。事件直前にも同番号からの着信があり、末尾4桁は「4471」。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "取り立て先リストのメモ",
+    "description": "手書きの訪問先リスト。「桐生(自転車店)」「沢田(商社)」など、複数の氏名と金額らしき数字が並んでいる。被害者の名もその一つとして記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "被害者の手帳",
+    "description": "『Mについて、警察に相談する』という走り書きが残るページ。直近数日は何者かへの警戒をうかがわせる記述が続いている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

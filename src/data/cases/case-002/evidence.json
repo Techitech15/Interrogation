@@ -1,0 +1,37 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "鑑識報告書",
+    "description": "凶器とみられるスパナの柄から、拭き取られたような跡と微量の皮脂反応が検出されたと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "被害者の帳簿",
+    "description": "金銭のやり取りを示す書き込みが並ぶ帳簿。ページの末尾に、丸で囲んだ「M」の印が繰り返し記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "隣の八百屋の防犯カメラ映像",
+    "description": "事件当夜21時32分、被害者の店の裏口から中に入る、容疑者と背格好の似た人物の映像。時刻表示が焼き込まれている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "同僚の証言メモ",
+    "description": "別の従業員が、事件当日の夕方に容疑者が電話を受けて『またMの野郎か』と漏らすのを聞いたという証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "被害者のスマートフォン着信履歴",
+    "description": "事件当日18時、名前の登録がない番号から着信があった記録。末尾4桁は「4471」。その後の発信履歴は残っていない。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]
