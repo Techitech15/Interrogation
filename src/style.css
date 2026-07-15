@@ -420,3 +420,182 @@ button.primary {
   color: var(--ink-soft);
   font-style: italic;
 }
+
+/* --- Header title link (SCR-00 へ戻る) --- */
+
+.app-header-title-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-weight: bold;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app-header-title-btn:hover {
+  text-decoration: underline;
+}
+
+/* --- Title screen (SCR-00) --- */
+
+.title-screen {
+  text-align: center;
+  padding: 64px 32px;
+}
+
+.title-logo {
+  margin-bottom: 56px;
+}
+
+.title-logo-main {
+  margin: 0 0 12px;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+}
+
+.title-logo-sub {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.title-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 72px;
+}
+
+.title-menu-btn {
+  width: min(280px, 100%);
+  padding: 12px 16px;
+  font-size: 15px;
+}
+
+.title-footnote {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* --- Case select screen (SCR-02) --- */
+
+.case-select h2 {
+  margin-top: 0;
+}
+
+.case-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.case-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.case-card:hover {
+  background: var(--line);
+}
+
+.case-card-caseid {
+  margin: 0;
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+
+.case-card h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.case-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.case-card-locked {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px dashed var(--ink-soft);
+  color: var(--paper);
+  background: repeating-linear-gradient(45deg, #55503f, #55503f 8px, #605a46 8px, #605a46 16px);
+  cursor: not-allowed;
+}
+
+.case-card-locked h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--paper);
+}
+
+.case-card-locked .case-card-caseid {
+  color: #cdc6b0;
+}
+
+.case-card-hint {
+  margin: 0;
+  font-size: 12px;
+}
+
+.ending-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.05em;
+}
+
+.ending-badge-unsolved {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.ending-badge-true {
+  background: var(--stamp);
+  color: var(--paper);
+}
+
+.ending-badge-released {
+  background: var(--ink-soft);
+  color: var(--paper);
+}
+
+.ending-badge-wrongful {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.back-to-title {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.back-to-select-btn {
+  margin-top: 16px;
+  margin-left: 8px;
+}

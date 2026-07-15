@@ -10,5 +10,6 @@
   },
   "suspectId": "suspect-001",
   "endings": ["true_confession", "released", "wrongful_conviction"],
-  "wrongfulPressureThreshold": 3
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
 }

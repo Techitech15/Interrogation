@@ -77,6 +77,8 @@ export interface Case {
   suspectId: string;
   endings: EndingId[];
   wrongfulPressureThreshold: number;
+  /** 隠し事件の開示条件。null = 常時表示。"all_true_confessions" = 他の全事件をTRUE ENDでクリアすると開示 */
+  hiddenCaseUnlockFlag: string | null;
 }
 
 export interface CaseBundle {

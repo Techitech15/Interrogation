@@ -7,22 +7,27 @@ import {
   createInitialGameState,
   startInterrogation,
 } from "../core/stateMachine";
-import type { CaseBundle, EmotionState, EndingId, GameState } from "../core/types";
-import { loadCase } from "../data/caseLoader";
-import { recordEnding } from "../persistence/saveStore";
+import type { Case, CaseBundle, EmotionState, EndingId, GameState } from "../core/types";
+import { listCases, loadCase } from "../data/caseLoader";
+import { getProgress, recordEnding } from "../persistence/saveStore";
 import { loadSettings, saveSettings } from "../persistence/settingsStore";
 import type { Settings } from "../persistence/settingsStore";
-import { initAudio, playSe, setMuted, startBgm } from "../audio/engine";
+import { initAudio, playSe, setMuted, startBgm, stopBgm } from "../audio/engine";
 import { createSuspectView } from "./suspectCanvas";
 import type { SuspectView } from "./suspectCanvas";
 import { renderSettingsScreen } from "./settingsScreen";
 import type { OllamaStatus, SettingsScreenActions, SettingsScreenState } from "./settingsScreen";
+import { renderCaseSelectScreen, renderTitleScreen } from "./titleScreen";
+import type { CaseSelectCardVm } from "./titleScreen";
 import { AIProviderRouter } from "../ai/AIProviderRouter";
 import { GeminiBYOKProvider } from "../ai/GeminiBYOKProvider";
 import { OllamaLocalProvider } from "../ai/OllamaLocalProvider";
 import type { TestimonyRequest } from "../ai/AIProvider";
 
+type Screen = "title" | "caseSelect" | "game";
+
 interface UiState {
+  screen: Screen;
   bundle: CaseBundle;
   game: GameState;
   selectedTestimonyTurn: number | null;
@@ -34,6 +39,29 @@ interface UiState {
   ollamaStatus: OllamaStatus;
   aiLoading: boolean;
   aiFallbackNotice: string | null;
+}
+
+function buildCaseSelectEntries(): CaseSelectCardVm[] {
+  const allCases = listCases();
+  const progress = getProgress();
+
+  const isHiddenCase = (c: Case) => c.hiddenCaseUnlockFlag === "all_true_confessions";
+  const regularCases = allCases.filter((c) => !isHiddenCase(c));
+  const allRegularTrueConfession =
+    regularCases.length > 0 &&
+    regularCases.every((c) => (progress.clearedCases[c.caseId] ?? []).includes("true_confession"));
+
+  return allCases.map((c): CaseSelectCardVm => {
+    if (isHiddenCase(c) && !allRegularTrueConfession) {
+      return { kind: "locked" };
+    }
+    return {
+      kind: "open",
+      caseId: c.caseId,
+      title: c.title,
+      clearedEndings: progress.clearedCases[c.caseId] ?? [],
+    };
+  });
 }
 
 const EMOTION_LABEL: Record<EmotionState, string> = {
@@ -60,6 +88,7 @@ export function mountApp(rootEl: HTMLElement): void {
   const settings = loadSettings();
 
   ui = {
+    screen: "title",
     bundle,
     game: createInitialGameState(bundle),
     selectedTestimonyTurn: null,
@@ -104,13 +133,50 @@ function el<K extends keyof HTMLElementTagNameMap>(
   return node;
 }
 
+function goToTitle(): void {
+  ui.screen = "title";
+  stopBgm();
+  render();
+}
+
+function goToCaseSelect(): void {
+  ui.screen = "caseSelect";
+  stopBgm();
+  render();
+}
+
+function startCase(caseId: string): void {
+  ui.bundle = loadCase(caseId);
+  ui.game = createInitialGameState(ui.bundle);
+  ui.selectedTestimonyTurn = null;
+  ui.breakdownMessage = null;
+  ui.aiFallbackNotice = null;
+  suspectView?.setEmotion(ui.game.emotionState);
+  ui.screen = "game";
+  render();
+}
+
 function render(): void {
   root.replaceChildren();
 
   const container = el("div", { className: "dossier-frame" });
   container.appendChild(renderHeader());
 
-  if (ui.game.currentPhase === "briefing") {
+  if (ui.screen === "title") {
+    container.appendChild(
+      renderTitleScreen({
+        onOpenCaseSelect: () => goToCaseSelect(),
+        onOpenSettings: () => openSettings(),
+      }),
+    );
+  } else if (ui.screen === "caseSelect") {
+    container.appendChild(
+      renderCaseSelectScreen(buildCaseSelectEntries(), {
+        onSelectCase: (caseId) => startCase(caseId),
+        onBackToTitle: () => goToTitle(),
+      }),
+    );
+  } else if (ui.game.currentPhase === "briefing") {
     container.appendChild(renderBriefing());
   } else if (ui.game.currentPhase === "ending" && !ui.breakdownMessage) {
     container.appendChild(renderEnding());
@@ -131,8 +197,19 @@ function renderHeader(): HTMLElement {
   const header = el("header", { className: "app-header" });
 
   const titleBlock = el("div", { className: "app-header-title" });
-  titleBlock.appendChild(el("h1", { text: "尋問 -JINMON- (プロトタイプ／P2)" }));
-  titleBlock.appendChild(el("p", { className: "case-title", text: ui.bundle.case.title }));
+  const h1 = el("h1");
+  const titleBtn = el("button", {
+    className: "app-header-title-btn",
+    text: "尋問 -JINMON- (プロトタイプ／P2)",
+  });
+  titleBtn.type = "button";
+  titleBtn.setAttribute("aria-label", "タイトルへ戻る");
+  titleBtn.addEventListener("click", () => goToTitle());
+  h1.appendChild(titleBtn);
+  titleBlock.appendChild(h1);
+  if (ui.screen === "game") {
+    titleBlock.appendChild(el("p", { className: "case-title", text: ui.bundle.case.title }));
+  }
   header.appendChild(titleBlock);
 
   const controls = el("div", { className: "app-header-controls" });
@@ -521,6 +598,11 @@ function renderEnding(): HTMLElement {
     render();
   });
   section.appendChild(restartBtn);
+
+  const backToSelectBtn = el("button", { className: "back-to-select-btn", text: "事件選択へ戻る" });
+  backToSelectBtn.type = "button";
+  backToSelectBtn.addEventListener("click", () => goToCaseSelect());
+  section.appendChild(backToSelectBtn);
 
   return section;
 }
