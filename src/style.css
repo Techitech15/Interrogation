@@ -522,6 +522,13 @@ button.primary {
   font-size: 16px;
 }
 
+.case-card-difficulty {
+  margin: 0;
+  font-size: 12px;
+  color: var(--stamp);
+  letter-spacing: 0.15em;
+}
+
 .case-card-badges {
   display: flex;
   flex-wrap: wrap;

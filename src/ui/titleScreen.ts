@@ -74,8 +74,15 @@ export function renderTitleScreen(actions: TitleScreenActions): HTMLElement {
  * "locked" は隠し事件が未解放の状態(caseId/titleを画面に一切渡さない)。
  */
 export type CaseSelectCardVm =
-  | { kind: "open"; caseId: string; title: string; clearedEndings: EndingId[] }
+  | { kind: "open"; caseId: string; title: string; difficulty: number; clearedEndings: EndingId[] }
   | { kind: "locked" };
+
+const DIFFICULTY_MAX_STARS = 5;
+
+function difficultyStars(difficulty: number): string {
+  const filled = Math.min(DIFFICULTY_MAX_STARS, Math.max(1, Math.round(difficulty)));
+  return "★".repeat(filled) + "☆".repeat(DIFFICULTY_MAX_STARS - filled);
+}
 
 export interface CaseSelectScreenActions {
   onSelectCase(caseId: string): void;
@@ -101,6 +108,9 @@ function renderCaseCard(card: CaseSelectCardVm, actions: CaseSelectScreenActions
     el("p", { className: "case-card-caseid", text: `CASE FILE No. ${card.caseId}` }),
   );
   cardBtn.appendChild(el("h3", { text: card.title }));
+  cardBtn.appendChild(
+    el("p", { className: "case-card-difficulty", text: `難易度 ${difficultyStars(card.difficulty)}` }),
+  );
 
   const badgeRow = el("div", { className: "case-card-badges" });
   if (card.clearedEndings.length === 0) {

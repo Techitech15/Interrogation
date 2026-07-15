@@ -3,66 +3,177 @@
     "questionId": "Q-OPPORTUNITY-01",
     "category": "opportunity",
     "label": "乾杯の後、席を立ちましたか",
-    "freeTextKeywords": ["乾杯", "席", "グラス", "近づ", "立った"],
+    "freeTextKeywords": [
+      "乾杯",
+      "席",
+      "グラス",
+      "近づ",
+      "立った"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
-      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "lieId": "LIE-01"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "lieId": "LIE-01",
+        "slipHintProbability": 0.4
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   },
   {
     "questionId": "Q-PURCHASE-01",
     "category": "evidence",
     "label": "その日の午後、薬局で何か買いましたか",
-    "freeTextKeywords": ["薬局", "薬", "購入", "レシート", "午後"],
+    "freeTextKeywords": [
+      "薬局",
+      "薬",
+      "購入",
+      "レシート",
+      "午後"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
-      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02", "slipHintProbability": 0.4 },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "lieId": "LIE-02"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "lieId": "LIE-02",
+        "slipHintProbability": 0.4
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   },
   {
     "questionId": "Q-MONEY-01",
     "category": "motive",
     "label": "被害者とお金のやり取りはありましたか",
-    "freeTextKeywords": ["お金", "借金", "無心", "返済", "M"],
+    "freeTextKeywords": [
+      "お金",
+      "借金",
+      "無心",
+      "返済",
+      "M"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-03" },
-      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-03", "slipHintProbability": 0.4 },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-MONEY-CALM"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "lieId": "LIE-03",
+        "slipHintProbability": 0.4
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   },
   {
     "questionId": "Q-RELATION-01",
     "category": "relationship",
     "label": "被害者とはどんな関係でしたか",
-    "freeTextKeywords": ["関係", "被害者", "取引先", "付き合い", "仕事"],
+    "freeTextKeywords": [
+      "関係",
+      "被害者",
+      "取引先",
+      "付き合い",
+      "仕事"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-CALM" },
-      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-SHAKEN" },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-RELATION-CALM"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-RELATION-SHAKEN"
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   },
   {
     "questionId": "Q-VICTIM-01",
     "category": "victim",
     "label": "最近の被害者の様子はどうでしたか",
-    "freeTextKeywords": ["様子", "最近", "被害者", "変わった", "悩み"],
+    "freeTextKeywords": [
+      "様子",
+      "最近",
+      "被害者",
+      "変わった",
+      "悩み"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-CALM" },
-      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-SHAKEN" },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-VICTIM-CALM"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-VICTIM-SHAKEN"
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   },
   {
     "questionId": "Q-CHITCHAT-01",
     "category": "chitchat",
     "label": "(世間話をする)",
-    "freeTextKeywords": ["天気", "趣味", "最近", "調子", "仕事"],
+    "freeTextKeywords": [
+      "天気",
+      "趣味",
+      "最近",
+      "調子",
+      "仕事"
+    ],
     "responseTable": [
-      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
-      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
-      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-CHITCHAT-01"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-CHITCHAT-SHAKEN"
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
     ]
   }
 ]

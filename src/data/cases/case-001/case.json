@@ -2,6 +2,7 @@
   "caseId": "case-001",
   "title": "深夜の密室",
   "isFreeDemo": true,
+  "difficulty": 1,
   "detentionLimitMinutes": 2880,
   "briefing": {
     "scenePhotos": [],
@@ -9,7 +10,11 @@
     "initialMemo": "第一発見者は被害者の同僚。自宅の合鍵を持つ人物として、交際関係にあった容疑者が任意同行された。容疑者は当初、当夜は被害者に会っていないと主張している。"
   },
   "suspectId": "suspect-001",
-  "endings": ["true_confession", "released", "wrongful_conviction"],
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
   "wrongfulPressureThreshold": 3,
   "hiddenCaseUnlockFlag": null
 }

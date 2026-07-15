@@ -59,6 +59,7 @@ function buildCaseSelectEntries(): CaseSelectCardVm[] {
       kind: "open",
       caseId: c.caseId,
       title: c.title,
+      difficulty: c.difficulty,
       clearedEndings: progress.clearedCases[c.caseId] ?? [],
     };
   });

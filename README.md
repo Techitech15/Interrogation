@@ -52,7 +52,7 @@ docs/        企画書ベースの詳細設計書
 tests/       vitest によるユニット・結合テスト
 ```
 
-新しい事件を追加する場合は `src/data/cases/case-XXX/` に4つのJSON(`case.json` / `suspect.json` / `questions.json` / `evidence.json` / `responseTexts.json`)を追加し、`src/data/caseLoader.ts` の `bundles` に登録する(コード変更はここのみ)。
+新しい事件を追加する場合は `src/data/cases/case-XXX/` に6つのJSON(`case.json` / `suspect.json` / `questions.json` / `evidence.json` / `responseTexts.json` / `aiProfile.json`)を置くだけでよい(ローダーが自動発見するためコード変更は不要)。参照整合性と「正規手順で自白まで到達可能か」は `tests/caseData.test.ts` が全事件に対して自動検証する。難易度の付け方は設計書 5.8「難易度カーブ設計」を参照。
 
 ## Electron(Steam版)
 

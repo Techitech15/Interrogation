@@ -15,6 +15,9 @@ export function validateCaseBundle(bundle: CaseBundle): string[] {
   if (caseData.detentionLimitMinutes <= 0) {
     errors.push(`${caseId}: detentionLimitMinutes must be positive`);
   }
+  if (!Number.isInteger(caseData.difficulty) || caseData.difficulty < 1 || caseData.difficulty > 5) {
+    errors.push(`${caseId}: difficulty must be an integer in 1..5`);
+  }
   if (caseData.wrongfulPressureThreshold < 1) {
     errors.push(`${caseId}: wrongfulPressureThreshold must be >= 1`);
   }

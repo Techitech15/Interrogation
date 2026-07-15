@@ -68,6 +68,8 @@ export interface Case {
   caseId: string;
   title: string;
   isFreeDemo: boolean;
+  /** 難易度(1〜5)。事件選択画面に★表示。設計書5.8の難易度カーブ参照 */
+  difficulty: number;
   detentionLimitMinutes: number;
   briefing: {
     scenePhotos: string[];
