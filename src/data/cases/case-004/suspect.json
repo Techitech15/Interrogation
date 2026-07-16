@@ -1,0 +1,33 @@
+{
+  "suspectId": "suspect-004",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "閉店後、一度だけ裏階段の踊り場で店主と鉢合わせ、言い争いになった",
+    "TR-02": "言い争いの際、かっとなって店主の肩を強く突き飛ばした",
+    "TR-03": "店の売上金を無断で使い込んでおり、店主に問い詰められていた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "閉店後はまっすぐ自分の部屋に戻りました。階段には近づいていません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "店主に手を上げたことなんて、一度もありません。触れてもいません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "売上金のことなんて、身に覚えがありません。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

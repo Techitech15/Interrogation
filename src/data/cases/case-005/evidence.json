@@ -1,0 +1,44 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "近隣住民の目撃証言メモ",
+    "description": "火災当夜、閉店後の質屋の裏口付近をうろつく容疑者らしき人影を見たという、向かいの家の住人の証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "衣服の灯油成分鑑定書",
+    "description": "任意同行時に容疑者が着ていた上着の袖口から、現場で撒かれたものと同一の灯油成分が検出されたという鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "指輪の鑑定結果",
+    "description": "容疑者宅から発見された指輪が、被害者の質草台帳に記載された品物と同一であると裏付ける鑑定結果。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "督促状の控え",
+    "description": "容疑者宛に届いていた借入金の督促状の控え。差出人の記載はなく、振込先の番号だけが手書きで残されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "鑑識報告書",
+    "description": "出火元は座敷の火鉢付近と推定され、床の焼け方から灯油のようなものが撒かれた跡が確認できると記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "焼け跡の紙片",
+    "description": "帳場の焼け跡から見つかった紙片。ほとんどが炭化しているが、判読できたのは数字の一部「…4471」のみ。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

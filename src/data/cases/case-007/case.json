@@ -1,0 +1,20 @@
+{
+  "caseId": "case-007",
+  "title": "配電盤の遺言",
+  "isFreeDemo": false,
+  "difficulty": 4,
+  "detentionLimitMinutes": 1680,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は自ら営む自動車整備工場の作業場で感電死しているのを発見された。配電盤付近に倒れており、事故として処理されかけたが、配線の一部に工具で細工したとみられる痕跡が見つかり、他殺の疑いが強まった。死亡推定時刻は閉店後の21時から22時の間。両手の指先には、機器に繰り返し触れようとしたような焼け跡が残っていた。",
+    "initialMemo": "第一発見者は翌朝出勤した従業員。容疑者は工場の従業員の一人で、当夜は定時で退勤し以後は工場に戻っていないと主張している。被害者は最近、工場が何らかの形で金融がらみの取引に利用されていることに気づき、周囲に相談していたという証言がある。工場裏の資材置き場からは、現金の入った封筒が見つかっており、封に丸で囲んだ「M」の印が押されていた。"
+  },
+  "suspectId": "suspect-007",
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
+}

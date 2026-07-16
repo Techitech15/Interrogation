@@ -1,0 +1,79 @@
+[
+  {
+    "questionId": "Q-BACK-01",
+    "category": "opportunity",
+    "label": "退勤後、工場に戻りましたか",
+    "freeTextKeywords": ["退勤後", "工場", "戻", "夜", "二人"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-WIRE-01",
+    "category": "weapon",
+    "label": "配電盤に触れましたか",
+    "freeTextKeywords": ["配電盤", "配線", "工具", "細工", "感電"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-ARGUE-01",
+    "category": "motive",
+    "label": "社長と揉めていたことは",
+    "freeTextKeywords": ["社長", "揉め", "口論", "問い詰め", "金融"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-ARGUE-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-03", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-DEBT-01",
+    "category": "network",
+    "label": "借金や取り立てに関わっていましたか",
+    "freeTextKeywords": ["借金", "取り立て", "手伝", "返済", "車両"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-DEBT-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-04", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-RELATION-01",
+    "category": "relationship",
+    "label": "社長とはどんな関係でしたか",
+    "freeTextKeywords": ["関係", "社長", "従業員", "工場", "付き合い"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-VICTIM-01",
+    "category": "victim",
+    "label": "最近の社長はどんな様子でしたか",
+    "freeTextKeywords": ["様子", "最近", "社長", "相談", "変わった"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-CHITCHAT-01",
+    "category": "chitchat",
+    "label": "(世間話をする)",
+    "freeTextKeywords": ["天気", "趣味", "最近", "調子", "仕事"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  }
+]

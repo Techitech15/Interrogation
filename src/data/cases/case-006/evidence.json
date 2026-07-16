@@ -1,0 +1,44 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "現場遺留物の鑑定書",
+    "description": "現場に散乱していたヘッドライトの破片とバンパーの塗膜片が、容疑者の所有する車両のものと一致するとの鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "スナック「悦」の伝言メモ",
+    "description": "被害者が閉店後の予定を書き留めたメモ。容疑者の名前と「23時 裏路地」という走り書きが残っている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "板金工の証言と作業伝票",
+    "description": "事故翌日、容疑者の依頼でバンパーとヘッドライト周りを修理したという知人の板金工の証言と、日付入りの作業伝票。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "被害者の手帳のメモ",
+    "description": "「あの人の借金、放っておけない」という走り書きと、当夜の口論を目撃した常連客の証言が付記された手帳のページ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "鑑識報告書",
+    "description": "被害者の受傷状況から、速度を落とさないまま衝突したとみられ、ブレーキ痕がほとんど残っていないと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "被害者の携帯電話の着信履歴",
+    "description": "名前の登録がない番号からの着信が事件直前まで複数回残っている。表示された番号の末尾は「4471」。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

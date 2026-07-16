@@ -1,0 +1,41 @@
+{
+  "suspectId": "suspect-006",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "当夜、被害者に呼び出され、閉店後の路地で落ち合う約束をしていた",
+    "TR-02": "運転していた車が被害者と接触し、そのまま現場を離れた",
+    "TR-03": "事故の翌日、知人の板金工に頼んで車体の傷を直させた",
+    "TR-04": "被害者から借金問題について問い詰められ、口論になっていたことを苦にしていた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの夜、悦子さんと会う約束なんてしていません。店にも寄っていません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "事故のことなんて知りません。車をぶつけてもいません。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "車を修理に出したことなんてありません。ずっとそのままです。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "借金のことで揉めてなんかいません。悦子さんとそんな話をしたことはない。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

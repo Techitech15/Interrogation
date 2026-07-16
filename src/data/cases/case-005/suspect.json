@@ -1,0 +1,41 @@
+{
+  "suspectId": "suspect-005",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "当夜、閉店後に裏口の鍵を使って質屋の中に入った",
+    "TR-02": "座敷の火鉢の火を使い、灯油を撒いた床に火を放った",
+    "TR-03": "以前質入れした妻の形見の指輪を、帳場から無断で持ち出した",
+    "TR-04": "闇金の取り立てに追われており、金を作るためにその夜店を訪れた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの夜、店の近くになんて行っていません。家におりました。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "火なんてつけていません。灯油にも触れていません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "質草を持ち出してなんかいません。何も盗っていません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "借金に追われてなんていません。金に困ってもいませんでした。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

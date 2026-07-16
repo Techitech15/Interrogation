@@ -1,0 +1,20 @@
+{
+  "caseId": "case-006",
+  "title": "雨夜のブレーキ痕",
+  "isFreeDemo": false,
+  "difficulty": 4,
+  "detentionLimitMinutes": 1920,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者はスナックの近くの路地で、車両に撥ねられたとみられる多発外傷により死亡した。死亡推定時刻は雨の降る当夜23時前後。現場にはブレーキ痕がほとんど残っておらず、速度を落とさないまま衝突し、そのまま走り去った可能性が高いと鑑識は見ている。路面に残ったタイヤ痕の幅から、小型の乗用車によるものと推定されている。",
+    "initialMemo": "被害者はスナック「悦」の雇われママで、複数の常連客の身の上相談に乗っていたという。当夜は閉店後、誰かと会う約束をしていた形跡があり、店の伝言メモにその名残がある。容疑者は当該時刻に付近を車で通ったこと自体を否定している。捜査線上には、被害者が最近、客の一人が抱える借金問題を気に掛けていたという証言も上がっている。"
+  },
+  "suspectId": "suspect-006",
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
+}

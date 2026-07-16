@@ -120,6 +120,36 @@
     ]
   },
   {
+    "questionId": "Q-CONTACT-01",
+    "category": "network",
+    "label": "Mと直接会ったことはありますか",
+    "freeTextKeywords": [
+      "直接",
+      "会った",
+      "報酬",
+      "受け渡し",
+      "雑居ビル"
+    ],
+    "responseTable": [
+      {
+        "emotion": "calm",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-CONTACT-CALM"
+      },
+      {
+        "emotion": "shaken",
+        "disclosedEvidence": [],
+        "lieId": "LIE-05",
+        "slipHintProbability": 0.4
+      },
+      {
+        "emotion": "hardened",
+        "disclosedEvidence": [],
+        "responseTextId": "RESP-REFUSE-01"
+      }
+    ]
+  },
+  {
     "questionId": "Q-VICTIM-01",
     "category": "victim",
     "label": "被害者はどんな人物でしたか",

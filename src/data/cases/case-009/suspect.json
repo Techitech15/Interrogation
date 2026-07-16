@@ -1,0 +1,49 @@
+{
+  "suspectId": "suspect-009",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "当夜、指定された廃倉庫で被害者と落ち合った",
+    "TR-02": "側溝で見つかった鉄パイプで被害者を殴打した",
+    "TR-03": "被害者から、返済が滞れば家族に危害を加えると脅されていた",
+    "TR-04": "以前、被害者に頼まれて金の入った封筒を別の人間に届ける使いを何度かしたことがある",
+    "TR-05": "被害者を殴った後、証拠を消すために倉庫の一部を片付け、被害者が持っていた回収ノートを持ち去った"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの夜、倉庫になんて行っていません。近づいてもいません。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "鉄パイプなんて、触れたこともありません。殴ってもいません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "脅されてなんかいません。家族のことを言われた覚えもありません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "使いを頼まれたことなんてありません。封筒のことも知りません。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-05",
+      "relatedTruthId": "TR-05",
+      "text": "ノートのことなんて知りません。持ち去ってなんかいません。",
+      "contradictingEvidenceIds": ["EV-05"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

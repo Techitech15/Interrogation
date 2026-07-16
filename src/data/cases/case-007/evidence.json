@@ -1,0 +1,44 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "工場の出入り記録",
+    "description": "退勤の打刻の後、勝手口の鍵が一度解錠され、当夜21時台に再び施錠された記録が残る出入りログ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "配電盤の工具痕鑑定書",
+    "description": "配電盤内部の配線に、容疑者が普段使っている工具のものと一致する特徴的な工具痕が残っていたとする鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "同僚の証言メモ",
+    "description": "数日前、休憩室で容疑者と社長が金融がらみの件で言い合いになっているのを聞いたという同僚の証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "借用書の控え",
+    "description": "容疑者名義の借用書の控え。貸主欄は空白で、返済期日の脇に取り立ての手伝いを示唆する走り書きが添えられている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "鑑識報告書",
+    "description": "被害者の受傷状況は事故による感電ではなく、意図的に細工された高電圧経路によるものと推定されると記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "資材置き場で見つかった現金入り封筒",
+    "description": "現金の入った封筒。封に丸で囲んだ「M」の印が押されているが、宛名も差出人の記載もない。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

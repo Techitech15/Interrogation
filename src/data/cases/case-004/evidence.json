@@ -1,0 +1,37 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "鑑識報告書",
+    "description": "後頭部の傷は踏み板への衝突では説明しにくい形状で、転落前に何らかの力が加わった可能性が高いと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "住み込み従業員の証言メモ",
+    "description": "閉店後、容疑者が自室ではなく裏階段の方へ向かう足音を聞いたという、同じ棟に住む別の従業員の証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "店主の作務衣の繊維鑑定",
+    "description": "被害者が着ていた作務衣の肩口から、容疑者の手指のものと一致する掌紋と繊維の乱れが検出されたとする鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "店の帳簿",
+    "description": "数か月にわたり売上金の一部が記録と合わない箇所が続き、店主が赤字で印をつけて容疑者の担当日に丸をつけていた帳簿。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "裏口のごみ箱で見つかった名刺の切れ端",
+    "description": "店とは無関係な名刺の切れ端。屋号も肩書もなく、隅に丸で囲んだ「M」の一文字だけが印刷されている。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

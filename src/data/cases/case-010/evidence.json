@@ -23,7 +23,7 @@
   {
     "evidenceId": "EV-04",
     "name": "取り立て先リストのメモ",
-    "description": "手書きの訪問先リスト。「桐生(自転車店)」「沢田(商社)」など、複数の氏名と金額らしき数字が並んでいる。被害者の名もその一つとして記されている。",
+    "description": "手書きの訪問先リスト。「桐生(自転車店)」「沢田(商社)」「早瀬(質屋)」「桑原(印刷所)」「塚原(整備工場)」など、複数の氏名と金額らしき数字が並んでいる。被害者の名もその一つとして記されている。",
     "unlockedFrom": "briefing",
     "imageAsset": "placeholder-evidence.svg"
   },
@@ -31,6 +31,13 @@
     "evidenceId": "EV-05",
     "name": "被害者の手帳",
     "description": "『Mについて、警察に相談する』という走り書きが残るページ。直近数日は何者かへの警戒をうかがわせる記述が続いている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "雑居ビルの防犯カメラ映像",
+    "description": "駅裏の雑居ビル空き部屋に、容疑者が定期的に出入りする姿が映った映像記録。同じ時間帯に、体格の異なる別の人物が先に部屋へ入っていく様子も確認できる。",
     "unlockedFrom": "briefing",
     "imageAsset": "placeholder-evidence.svg"
   }

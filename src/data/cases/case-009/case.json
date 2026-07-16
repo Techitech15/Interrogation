@@ -1,0 +1,20 @@
+{
+  "caseId": "case-009",
+  "title": "廃倉庫の回収ノート",
+  "isFreeDemo": false,
+  "difficulty": 5,
+  "detentionLimitMinutes": 1440,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は使われなくなった倉庫の中で、頭部を鈍器で複数回殴打された状態で発見された。死亡推定時刻は当夜22時前後。現場には争った跡があり、被害者の右手には自分の血で書きかけたような跡が残っていたが、判読はできなかった。凶器とみられる鉄パイプが現場近くの側溝から発見されており、握りの部分から複数の指紋が採取されている。",
+    "initialMemo": "被害者はいわゆる便利屋を名乗っていたが、実態は不明な金の取り立てじみた仕事を請け負っていたという噂が周辺で複数上がっている。当夜、被害者は誰かへ金を届けるか受け取るかする約束があった様子で、倉庫にはその形跡が残っていた。容疑者は当該時刻に倉庫の近くにいたことを当初否定している。捜査員が被害者の交友関係を尋ねると、口を開きかけて言葉を飲み込む関係者が相次いでおり、何かを恐れているような空気があるという。"
+  },
+  "suspectId": "suspect-009",
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
+  "wrongfulPressureThreshold": 2,
+  "hiddenCaseUnlockFlag": null
+}

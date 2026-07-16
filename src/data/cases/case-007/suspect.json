@@ -1,0 +1,41 @@
+{
+  "suspectId": "suspect-007",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "定時退勤後、こっそり工場に戻り被害者と二人きりになった",
+    "TR-02": "被害者が触れる配電盤の配線をあらかじめ工具で細工しておいた",
+    "TR-03": "工場が金融がらみの取引に利用されている件で、社長である被害者に問い詰められ口論になった",
+    "TR-04": "自分自身も「M」から金を借りており、その返済のため工場の車両を使った取り立ての手伝いをしていた"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "退勤後は工場になんて戻っていません。まっすぐ家に帰りました。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "配電盤に細工なんてしていません。工具で触ってもいません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "社長と揉めてなんかいません。世間話をする程度でした。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "借金なんてしていません。取り立てを手伝ったこともありません。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

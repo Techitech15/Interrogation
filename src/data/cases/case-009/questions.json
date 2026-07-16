@@ -1,0 +1,79 @@
+[
+  {
+    "questionId": "Q-WAREHOUSE-01",
+    "category": "opportunity",
+    "label": "あの夜、倉庫に行きましたか",
+    "freeTextKeywords": ["倉庫", "あの夜", "行った", "近づ", "落ち合"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-PIPE-01",
+    "category": "weapon",
+    "label": "鉄パイプに触れましたか",
+    "freeTextKeywords": ["鉄パイプ", "凶器", "殴", "触れ", "側溝"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-THREAT-01",
+    "category": "motive",
+    "label": "被害者に脅されていましたか",
+    "freeTextKeywords": ["脅", "家族", "危害", "返済", "怖"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-03" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-03", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-ERRAND-01",
+    "category": "network",
+    "label": "被害者に使いを頼まれたことは",
+    "freeTextKeywords": ["使い", "封筒", "頼まれ", "届け", "受け取り"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-ERRAND-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-04", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-NOTEBOOK-01",
+    "category": "evidence",
+    "label": "回収ノートを持ち去りましたか",
+    "freeTextKeywords": ["ノート", "回収", "持ち去", "隠", "片付け"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-NOTEBOOK-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-05", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-WHOM-01",
+    "category": "network",
+    "label": "被害者は誰のために働いていたのですか",
+    "freeTextKeywords": ["誰の", "M", "エム", "黒幕", "元締め"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-WHOM-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-WHOM-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-CHITCHAT-01",
+    "category": "chitchat",
+    "label": "(世間話をする)",
+    "freeTextKeywords": ["天気", "趣味", "最近", "調子", "仕事"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  }
+]

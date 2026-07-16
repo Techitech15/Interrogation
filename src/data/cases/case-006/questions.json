@@ -1,0 +1,79 @@
+[
+  {
+    "questionId": "Q-APPOINTMENT-01",
+    "category": "opportunity",
+    "label": "あの夜、被害者と会う約束は",
+    "freeTextKeywords": ["約束", "あの夜", "悦子", "店", "会う"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-01", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-COLLISION-01",
+    "category": "weapon",
+    "label": "車を被害者にぶつけましたか",
+    "freeTextKeywords": ["車", "ぶつけ", "事故", "撥ね", "衝突"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "lieId": "LIE-02" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-02", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-REPAIR-01",
+    "category": "evidence",
+    "label": "車を修理に出しましたか",
+    "freeTextKeywords": ["修理", "板金", "車", "傷", "直"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-REPAIR-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-03", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-TROUBLE-01",
+    "category": "motive",
+    "label": "被害者と揉めていたことは",
+    "freeTextKeywords": ["揉め", "借金", "口論", "問い詰め", "相談"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-TROUBLE-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "lieId": "LIE-04", "slipHintProbability": 0.4 },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-RELATION-01",
+    "category": "relationship",
+    "label": "被害者とはどんな間柄でしたか",
+    "freeTextKeywords": ["関係", "被害者", "常連", "スナック", "付き合い"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-RELATION-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-VICTIM-01",
+    "category": "victim",
+    "label": "被害者はどんな人でしたか",
+    "freeTextKeywords": ["被害者", "人柄", "様子", "客", "相談"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-CALM" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-VICTIM-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  },
+  {
+    "questionId": "Q-CHITCHAT-01",
+    "category": "chitchat",
+    "label": "(世間話をする)",
+    "freeTextKeywords": ["天気", "趣味", "最近", "調子", "仕事"],
+    "responseTable": [
+      { "emotion": "calm", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-01" },
+      { "emotion": "shaken", "disclosedEvidence": [], "responseTextId": "RESP-CHITCHAT-SHAKEN" },
+      { "emotion": "hardened", "disclosedEvidence": [], "responseTextId": "RESP-REFUSE-01" }
+    ]
+  }
+]

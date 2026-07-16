@@ -1,0 +1,44 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "倉庫周辺の目撃証言",
+    "description": "当夜、倉庫の方へ歩いていく容疑者らしき人影を見たという、近隣の夜警の証言メモ。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "鉄パイプの鑑定書",
+    "description": "側溝から発見された鉄パイプから、被害者の血液反応と容疑者のものと一致する掌紋が検出されたとする鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "被害者の携帯に残るメッセージ",
+    "description": "被害者から容疑者宛に送られたメッセージの履歴。返済が滞れば「家族にも顔を出す」という趣旨の文言が残っている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "コンビニの防犯カメラ映像",
+    "description": "容疑者が過去に数回、指定された場所で封筒らしきものを別の人物へ渡す様子が映った、複数日にまたがる映像記録。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "回収ノートの燃え残り",
+    "description": "容疑者の自宅裏の焼却跡から見つかったノートの燃え残り。氏名と金額らしき数字が並ぶ表の一部が判読できる。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "被害者の上着から見つかった紙片",
+    "description": "被害者の上着の内ポケットにあった紙片。丸で囲んだ「M」の印と、電話番号の下四桁とみられる「4471」が記されている。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

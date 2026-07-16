@@ -1,0 +1,44 @@
+[
+  {
+    "evidenceId": "EV-01",
+    "name": "印刷所の受付記録と防犯カメラ映像",
+    "description": "事件当日の午後、容疑者が印刷所の受付を通過し、被害者の作業場へ向かう姿が映った映像記録。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-02",
+    "name": "給湯ポットの微物鑑定書",
+    "description": "給湯ポットの注ぎ口付近から、容疑者の指紋と薬物の微量残留物が検出されたとする鑑定書。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-03",
+    "name": "売人の証言記録",
+    "description": "別件で取り調べを受けていた売人が、容疑者に繰り返し違法薬物を売っていたと供述した記録。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-04",
+    "name": "督促状の控え",
+    "description": "容疑者宛に届いていた借入金の督促状の控え。差出人の記載はなく、期日欄に赤字で「厳守」とだけ書き添えられている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-05",
+    "name": "鑑識報告書",
+    "description": "被害者の血液から検出された違法薬物は、通常の乱用パターンとは異なる急激な摂取を示しており、自発的な使用とは考えにくいと記されている。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  },
+  {
+    "evidenceId": "EV-06",
+    "name": "被害者の遺品にあった紙片",
+    "description": "名刺サイズの紙片。丸で囲んだ「M」の印と、電話番号の下四桁とみられる「4471」の走り書きが残されている。事件との関係は不明。",
+    "unlockedFrom": "briefing",
+    "imageAsset": "placeholder-evidence.svg"
+  }
+]

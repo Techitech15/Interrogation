@@ -1,0 +1,41 @@
+{
+  "suspectId": "suspect-008",
+  "name": "???",
+  "initialEmotion": "calm",
+  "truthTable": {
+    "TR-01": "事件当日、印刷所を訪れ、被害者と二人きりで話していた",
+    "TR-02": "来客用の給湯ポットに薬物を混入した",
+    "TR-03": "以前から闇のルートを通じて違法薬物を調達していた",
+    "TR-04": "被害者に借金の返済を厳しく迫られており、その金は「M」から借りた分の穴埋めに充てるつもりだった"
+  },
+  "lieTable": [
+    {
+      "lieId": "LIE-01",
+      "relatedTruthId": "TR-01",
+      "text": "あの日は印刷所になんて行っていません。訪ねてもいません。",
+      "contradictingEvidenceIds": ["EV-01"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-02",
+      "relatedTruthId": "TR-02",
+      "text": "ポットに何か入れたことなんてありません。触れてもいません。",
+      "contradictingEvidenceIds": ["EV-02"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-03",
+      "relatedTruthId": "TR-03",
+      "text": "薬物なんて、手に入れる伝手はありません。",
+      "contradictingEvidenceIds": ["EV-03"],
+      "requiredEmotionNotIn": ["hardened"]
+    },
+    {
+      "lieId": "LIE-04",
+      "relatedTruthId": "TR-04",
+      "text": "借金の返済に困ってなんかいません。誰かに迫られてもいません。",
+      "contradictingEvidenceIds": ["EV-04"],
+      "requiredEmotionNotIn": ["hardened"]
+    }
+  ]
+}

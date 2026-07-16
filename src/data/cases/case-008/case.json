@@ -1,0 +1,20 @@
+{
+  "caseId": "case-008",
+  "title": "校正刷りの空白",
+  "isFreeDemo": false,
+  "difficulty": 4,
+  "detentionLimitMinutes": 1680,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は自ら営む印刷所の作業場で意識を失った状態で倒れているのを発見され、搬送先の病院で死亡が確認された。血液から違法薬物の成分が高濃度で検出され、致死量に達していたと判明した。被害者に薬物使用の習慣を示す記録はなく、何者かに摂取させられた可能性が高いと見られている。胃の内容物からは茶に混ぜやすい形状の成分も検出された。",
+    "initialMemo": "被害者は当日、来客用の給湯ポットで来訪者に茶を出していたとみられる。第一発見者は翌朝出勤した従業員で、ポットの中身はすでに空になっていた。容疑者は印刷所に出入りしていた取引先の一人だが、当日は訪れていないと主張している。被害者は最近、資金繰りについて誰かに相談していたという証言があり、同僚に話を聞こうとしても、ある一文字を口にした途端に皆が押し黙ってしまうという。"
+  },
+  "suspectId": "suspect-008",
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
+  "wrongfulPressureThreshold": 2,
+  "hiddenCaseUnlockFlag": null
+}

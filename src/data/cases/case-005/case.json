@@ -1,0 +1,20 @@
+{
+  "caseId": "case-005",
+  "title": "質草の灰",
+  "isFreeDemo": false,
+  "difficulty": 3,
+  "detentionLimitMinutes": 1920,
+  "briefing": {
+    "scenePhotos": [],
+    "autopsyReport": "被害者は自ら営む質屋の奥座敷で、逃げ遅れたとみられる状態で焼死体となって発見された。死因は一酸化炭素中毒。出火元は座敷の火鉢付近と推定されるが、灯油のようなものが撒かれた跡が床の焼け方から見て取れ、放火の可能性が高いと鑑識は見ている。帳場の錠前にはこじ開けられた跡があり、外部からの侵入も疑われている。",
+    "initialMemo": "火災当夜、質屋の帳場は施錠されておらず、金目の質草だけが数点持ち去られていた形跡がある。被害者は最近、複数の客との間で質草の受け出しをめぐるもめ事を抱えていたという近隣の証言がある。容疑者はかつて店に品物を預けていた客の一人で、当夜は店の近くにいたことを当初否定している。焼け跡からは出所不明の紙片が見つかっており、判読できたのは数字の一部「…4471」のみだった。"
+  },
+  "suspectId": "suspect-005",
+  "endings": [
+    "true_confession",
+    "released",
+    "wrongful_conviction"
+  ],
+  "wrongfulPressureThreshold": 3,
+  "hiddenCaseUnlockFlag": null
+}
