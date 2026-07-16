@@ -7,12 +7,14 @@ const { app, BrowserWindow, shell } = require("electron");
 const path = require("node:path");
 
 const INDEX_HTML = path.join(__dirname, "..", "dist", "index.html");
+const APP_ICON = path.join(__dirname, "..", "dist", "assets", "common", "app-icon-512.png");
 
 /** @type {BrowserWindow | null} */
 let mainWindow = null;
 
 function createWindow() {
   const win = new BrowserWindow({
+    icon: APP_ICON,
     width: 1280,
     height: 800,
     minWidth: 960,

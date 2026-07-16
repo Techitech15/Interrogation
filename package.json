@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
-    "build:electron": "tsc -p tsconfig.json --noEmit && JINMON_TARGET=electron vite build",
+    "build:electron": "tsc -p tsconfig.json --noEmit && vite build --mode electron",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -33,12 +33,15 @@
       "electron/**"
     ],
     "win": {
+      "icon": "public/assets/common/app-icon-512.png",
       "target": "nsis"
     },
     "mac": {
+      "icon": "public/assets/common/app-icon-512.png",
       "target": "dmg"
     },
     "linux": {
+      "icon": "public/assets/common/app-icon-512.png",
       "target": "AppImage"
     }
   }

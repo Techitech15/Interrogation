@@ -1,94 +1,150 @@
-// SCR-04 容疑者シルエット表現(設計書 3.4節)。
-// `.placeholder-silhouette` のCSS版に代わるCanvas描画。
-// シルエット本体(仮アセット・後日画像差し替え予定) + 目の光レイヤーを
-// `EmotionState` に応じて制御する。
-//
-// requestAnimationFrame はブラウザ環境専用。node/vitest環境では
-// createSuspectView() を呼ばない前提とし、型チェックのみを対象とする。
-
 import type { EmotionState } from "../core/types";
 
 const SILHOUETTE_COLOR = "#2a261c";
-const BACKGROUND_COLOR = "transparent";
+const EYE_COLOR = "#f4e6b8";
+
+type SuspectPose = EmotionState | "collapsed";
 
 interface EmotionVisual {
   eyeAlpha: number;
   pupilScaleY: number;
-  tiltDegrees: number;
   jitter: boolean;
 }
 
+interface EyeRegion {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+}
+
+interface PoseEyes {
+  leftEye: EyeRegion;
+  rightEye: EyeRegion;
+}
+
+interface EyeMetadata {
+  poses: Record<SuspectPose, PoseEyes>;
+}
+
+const POSES: readonly SuspectPose[] = ["calm", "shaken", "hardened", "collapsed"];
+
 const EMOTION_VISUALS: Record<EmotionState, EmotionVisual> = {
-  calm: { eyeAlpha: 1.0, pupilScaleY: 1.0, tiltDegrees: 0, jitter: false },
-  shaken: { eyeAlpha: 0.6, pupilScaleY: 1.3, tiltDegrees: 3, jitter: true },
-  hardened: { eyeAlpha: 0.4, pupilScaleY: 0.6, tiltDegrees: -2, jitter: false },
+  calm: { eyeAlpha: 1, pupilScaleY: 1, jitter: false },
+  shaken: { eyeAlpha: 0.6, pupilScaleY: 1.3, jitter: true },
+  hardened: { eyeAlpha: 0.4, pupilScaleY: 0.6, jitter: false },
+};
+
+const DEFAULT_EYES: EyeMetadata = {
+  poses: {
+    calm: {
+      leftEye: { cx: 0.47, cy: 0.26, rx: 0.018, ry: 0.006 },
+      rightEye: { cx: 0.53, cy: 0.26, rx: 0.018, ry: 0.006 },
+    },
+    shaken: {
+      leftEye: { cx: 0.468, cy: 0.27, rx: 0.019, ry: 0.008 },
+      rightEye: { cx: 0.532, cy: 0.27, rx: 0.019, ry: 0.008 },
+    },
+    hardened: {
+      leftEye: { cx: 0.47, cy: 0.25, rx: 0.018, ry: 0.0045 },
+      rightEye: { cx: 0.53, cy: 0.25, rx: 0.018, ry: 0.0045 },
+    },
+    collapsed: {
+      leftEye: { cx: 0.47, cy: 0.4, rx: 0.016, ry: 0.005 },
+      rightEye: { cx: 0.53, cy: 0.4, rx: 0.016, ry: 0.005 },
+    },
+  },
 };
 
 export interface SuspectView {
+  setSuspect(suspectId: string): void;
   setEmotion(emotion: EmotionState): void;
   playBreakdown(): Promise<void>;
+  resetPose(): void;
   destroy(): void;
 }
 
-/** シルエット本体(頭+肩の台形程度の仮アセット)を描画する。 */
-function drawSilhouetteBody(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-  ctx.fillStyle = SILHOUETTE_COLOR;
+function assetUrl(relativePath: string): string {
+  return `${import.meta.env.BASE_URL}${relativePath}`;
+}
 
-  // 頭部(楕円)
+function isEyeRegion(value: unknown): value is EyeRegion {
+  if (typeof value !== "object" || value === null) return false;
+  const region = value as Partial<EyeRegion>;
+  return [region.cx, region.cy, region.rx, region.ry].every(
+    (part) => typeof part === "number" && Number.isFinite(part),
+  );
+}
+
+function parseEyeMetadata(value: unknown): EyeMetadata | null {
+  if (typeof value !== "object" || value === null || !("poses" in value)) return null;
+  const poses = (value as { poses?: unknown }).poses;
+  if (typeof poses !== "object" || poses === null) return null;
+
+  const parsed = {} as Record<SuspectPose, PoseEyes>;
+  for (const pose of POSES) {
+    const candidate = (poses as Record<string, unknown>)[pose];
+    if (typeof candidate !== "object" || candidate === null) return null;
+    const pair = candidate as Partial<PoseEyes>;
+    if (!isEyeRegion(pair.leftEye) || !isEyeRegion(pair.rightEye)) return null;
+    parsed[pose] = { leftEye: pair.leftEye, rightEye: pair.rightEye };
+  }
+  return { poses: parsed };
+}
+
+/** Procedural fallback while an image is loading or if an asset cannot be read. */
+function drawFallbackBody(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+): void {
+  ctx.fillStyle = SILHOUETTE_COLOR;
   const headCenterX = width / 2;
   const headCenterY = height * 0.28;
-  const headRadiusX = width * 0.14;
-  const headRadiusY = height * 0.16;
   ctx.beginPath();
-  ctx.ellipse(headCenterX, headCenterY, headRadiusX, headRadiusY, 0, 0, Math.PI * 2);
+  ctx.ellipse(headCenterX, headCenterY, width * 0.14, height * 0.16, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  // 肩(台形)
-  const shoulderTopY = height * 0.42;
-  const shoulderTopHalfWidth = width * 0.16;
-  const shoulderBottomHalfWidth = width * 0.36;
   ctx.beginPath();
-  ctx.moveTo(headCenterX - shoulderTopHalfWidth, shoulderTopY);
-  ctx.lineTo(headCenterX + shoulderTopHalfWidth, shoulderTopY);
-  ctx.lineTo(headCenterX + shoulderBottomHalfWidth, height);
-  ctx.lineTo(headCenterX - shoulderBottomHalfWidth, height);
+  ctx.moveTo(headCenterX - width * 0.16, height * 0.42);
+  ctx.lineTo(headCenterX + width * 0.16, height * 0.42);
+  ctx.lineTo(headCenterX + width * 0.36, height);
+  ctx.lineTo(headCenterX - width * 0.36, height);
   ctx.closePath();
   ctx.fill();
 }
 
-/** 目(横長の楕円光点)を描画する。alphaとpupilScaleYで光量・瞳孔を制御する。 */
 function drawEyes(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
+  eyes: PoseEyes,
   alpha: number,
   pupilScaleY: number,
 ): void {
-  const eyeY = height * 0.26;
-  const eyeOffsetX = width * 0.055;
-  const eyeRadiusX = width * 0.035;
-  const eyeRadiusY = height * 0.012 * pupilScaleY;
-
   ctx.save();
   ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
-  ctx.fillStyle = "#f4e6b8";
-  ctx.shadowColor = "#f4e6b8";
+  ctx.fillStyle = EYE_COLOR;
+  ctx.shadowColor = EYE_COLOR;
   ctx.shadowBlur = 6;
 
-  for (const sign of [-1, 1] as const) {
-    const eyeX = width / 2 + sign * eyeOffsetX;
+  for (const eye of [eyes.leftEye, eyes.rightEye]) {
     ctx.beginPath();
-    ctx.ellipse(eyeX, eyeY, eyeRadiusX, eyeRadiusY, 0, 0, Math.PI * 2);
+    ctx.ellipse(
+      eye.cx * width,
+      eye.cy * height,
+      eye.rx * width,
+      eye.ry * height * pupilScaleY,
+      0,
+      0,
+      Math.PI * 2,
+    );
     ctx.fill();
   }
   ctx.restore();
 }
 
-/**
- * `container` の中に容疑者シルエットCanvasを生成し、感情状態に応じた
- * 目の光・姿勢傾き演出を行う制御ハンドルを返す。
- */
-export function createSuspectView(container: HTMLElement): SuspectView {
+export function createSuspectView(container: HTMLElement, initialSuspectId: string): SuspectView {
   const canvas = document.createElement("canvas");
   canvas.className = "suspect-canvas";
   canvas.width = 480;
@@ -96,81 +152,129 @@ export function createSuspectView(container: HTMLElement): SuspectView {
   container.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
-
   let emotion: EmotionState = "calm";
+  let poseOverride: SuspectPose | null = null;
+  let eyeMetadata = DEFAULT_EYES;
+  let images = new Map<SuspectPose, HTMLImageElement>();
+  let assetGeneration = 0;
   let rafId: number | null = null;
   let destroyed = false;
   let breakdownAlphaOverride: number | null = null;
+
+  function currentPose(): SuspectPose {
+    return poseOverride ?? emotion;
+  }
+
+  function setWrapEmotionClass(nextEmotion: EmotionState): void {
+    container.classList.remove("emotion-calm", "emotion-shaken", "emotion-hardened");
+    container.classList.add(`emotion-${nextEmotion}`);
+  }
 
   function render(jitterOffsetX: number, jitterOffsetY: number): void {
     if (!ctx) return;
     const { width, height } = canvas;
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = BACKGROUND_COLOR;
+    ctx.save();
+    ctx.translate(jitterOffsetX, jitterOffsetY);
+
+    const pose = currentPose();
+    const image = images.get(pose);
+    if (image?.complete && image.naturalWidth > 0) {
+      ctx.drawImage(image, 0, 0, width, height);
+    } else {
+      drawFallbackBody(ctx, width, height);
+    }
 
     const visual = EMOTION_VISUALS[emotion];
-    const tiltRadians = (visual.tiltDegrees * Math.PI) / 180;
-
-    ctx.save();
-    ctx.translate(width / 2 + jitterOffsetX, height / 2 + jitterOffsetY);
-    ctx.rotate(tiltRadians);
-    ctx.translate(-width / 2, -height / 2);
-
-    drawSilhouetteBody(ctx, width, height);
-
     const alpha = breakdownAlphaOverride ?? visual.eyeAlpha;
-    drawEyes(ctx, width, height, alpha, visual.pupilScaleY);
-
+    drawEyes(ctx, width, height, eyeMetadata.poses[pose], alpha, visual.pupilScaleY);
     ctx.restore();
   }
 
   function loop(timeMs: number): void {
     if (destroyed) return;
     const visual = EMOTION_VISUALS[emotion];
-    let jitterX = 0;
-    let jitterY = 0;
-    if (visual.jitter) {
-      // ±1px程度の微振動。
-      jitterX = Math.sin(timeMs / 60) * 1;
-      jitterY = Math.cos(timeMs / 90) * 1;
-    }
+    const jitterX = visual.jitter ? Math.sin(timeMs / 60) : 0;
+    const jitterY = visual.jitter ? Math.cos(timeMs / 90) : 0;
     render(jitterX, jitterY);
     rafId = window.requestAnimationFrame(loop);
   }
 
   function startLoop(): void {
     if (rafId !== null || destroyed) return;
-    if (typeof window === "undefined" || typeof window.requestAnimationFrame !== "function") {
-      render(0, 0);
-      return;
-    }
+    render(0, 0);
+    if (typeof window === "undefined" || typeof window.requestAnimationFrame !== "function") return;
     rafId = window.requestAnimationFrame(loop);
   }
 
   function stopLoop(): void {
-    if (rafId !== null && typeof window !== "undefined" && typeof window.cancelAnimationFrame === "function") {
+    if (
+      rafId !== null &&
+      typeof window !== "undefined" &&
+      typeof window.cancelAnimationFrame === "function"
+    ) {
       window.cancelAnimationFrame(rafId);
     }
     rafId = null;
   }
 
+  function loadSuspectAssets(suspectId: string): void {
+    const generation = ++assetGeneration;
+    const caseId = suspectId.replace(/^suspect-/, "case-");
+    const nextImages = new Map<SuspectPose, HTMLImageElement>();
+    eyeMetadata = DEFAULT_EYES;
+    poseOverride = null;
+    breakdownAlphaOverride = null;
+
+    for (const pose of POSES) {
+      const image = new Image();
+      image.decoding = "async";
+      image.addEventListener("load", () => {
+        if (generation === assetGeneration && !destroyed) render(0, 0);
+      });
+      image.src = assetUrl(
+        `assets/cases/${caseId}/${suspectId}-pose-${pose}.png`,
+      );
+      nextImages.set(pose, image);
+    }
+    images = nextImages;
+
+    void fetch(assetUrl(`assets/cases/${caseId}/${suspectId}-eyes.json`))
+      .then((response) => (response.ok ? response.json() : Promise.reject(new Error("eyes"))))
+      .then((value: unknown) => {
+        const parsed = parseEyeMetadata(value);
+        if (parsed && generation === assetGeneration && !destroyed) {
+          eyeMetadata = parsed;
+          render(0, 0);
+        }
+      })
+      .catch(() => {
+        // file:// builds may not allow fetch; the typed defaults keep the view usable.
+      });
+  }
+
+  setWrapEmotionClass(emotion);
+  loadSuspectAssets(initialSuspectId);
   startLoop();
 
   return {
+    setSuspect(suspectId: string): void {
+      loadSuspectAssets(suspectId);
+      startLoop();
+    },
+
     setEmotion(nextEmotion: EmotionState): void {
       emotion = nextEmotion;
-      breakdownAlphaOverride = null;
-      // playBreakdown() stops the loop; resume it so future emotion changes
-      // (including jitter for "shaken") keep animating.
+      setWrapEmotionClass(nextEmotion);
       startLoop();
     },
 
     async playBreakdown(): Promise<void> {
       stopLoop();
+      poseOverride = "collapsed";
       const durationMs = 1000;
       const startAlpha = EMOTION_VISUALS[emotion].eyeAlpha;
-      const startTime =
-        typeof performance !== "undefined" ? performance.now() : Date.now();
+      const startTime = typeof performance !== "undefined" ? performance.now() : Date.now();
 
       return new Promise((resolve) => {
         function step(): void {
@@ -179,8 +283,7 @@ export function createSuspectView(container: HTMLElement): SuspectView {
             return;
           }
           const now = typeof performance !== "undefined" ? performance.now() : Date.now();
-          const elapsed = now - startTime;
-          const progress = Math.min(1, elapsed / durationMs);
+          const progress = Math.min(1, (now - startTime) / durationMs);
           breakdownAlphaOverride = startAlpha * (1 - progress);
           render(0, 0);
 
@@ -198,8 +301,15 @@ export function createSuspectView(container: HTMLElement): SuspectView {
       });
     },
 
+    resetPose(): void {
+      poseOverride = null;
+      breakdownAlphaOverride = null;
+      startLoop();
+    },
+
     destroy(): void {
       destroyed = true;
+      assetGeneration += 1;
       stopLoop();
       canvas.remove();
     },

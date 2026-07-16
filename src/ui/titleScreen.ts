@@ -37,7 +37,12 @@ export function renderTitleScreen(actions: TitleScreenActions): HTMLElement {
   const section = el("section", { className: "panel title-screen" });
 
   const logo = el("div", { className: "title-logo" });
-  logo.appendChild(el("p", { className: "title-logo-main", text: "尋問 -JINMON-" }));
+  const logoImage = el("img", { className: "title-logo-image" });
+  logoImage.src = `${import.meta.env.BASE_URL}assets/common/title-logo.png`;
+  logoImage.alt = "尋問 -JINMON-";
+  logoImage.width = 2000;
+  logoImage.height = 600;
+  logo.appendChild(logoImage);
   logo.appendChild(
     el("p", { className: "title-logo-sub", text: "嘘をつくAI容疑者 尋問アドベンチャー" }),
   );

@@ -108,7 +108,7 @@ export function mountApp(rootEl: HTMLElement): void {
   setMuted(ui.settings.muted);
 
   suspectCanvasWrap = el("div", { className: "suspect-canvas-wrap" });
-  suspectView = createSuspectView(suspectCanvasWrap);
+  suspectView = createSuspectView(suspectCanvasWrap, ui.bundle.suspect.suspectId);
   suspectView.setEmotion(ui.game.emotionState);
 
   root.addEventListener(
@@ -152,6 +152,7 @@ function startCase(caseId: string): void {
   ui.selectedTestimonyTurn = null;
   ui.breakdownMessage = null;
   ui.aiFallbackNotice = null;
+  suspectView?.setSuspect(ui.bundle.suspect.suspectId);
   suspectView?.setEmotion(ui.game.emotionState);
   ui.screen = "game";
   render();
@@ -566,6 +567,7 @@ function renderBreakdownOverlay(): HTMLElement {
   const continueBtn = el("button", { text: "続ける" });
   continueBtn.addEventListener("click", () => {
     ui.breakdownMessage = null;
+    suspectView?.resetPose();
     startBgm("interrogation");
     render();
   });
@@ -595,6 +597,7 @@ function renderEnding(): HTMLElement {
     ui.game = createInitialGameState(ui.bundle);
     ui.selectedTestimonyTurn = null;
     ui.breakdownMessage = null;
+    suspectView?.resetPose();
     suspectView?.setEmotion(ui.game.emotionState);
     render();
   });

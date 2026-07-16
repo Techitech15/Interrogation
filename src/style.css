@@ -103,16 +103,33 @@ button.primary {
   border-right: 1px solid var(--line);
 }
 
-/* Suspect silhouette canvas (3.4節 目の光演出). Body/eyes are drawn procedurally
-   as a placeholder asset; swap for real art in a later pass. */
 .suspect-canvas-wrap {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   margin: 12px 0;
-  border: 1px dashed var(--ink-soft);
-  background: repeating-linear-gradient(45deg, #55503f, #55503f 10px, #605a46 10px, #605a46 20px);
+  border: 1px solid var(--ink-soft);
+  background: #28231a url("/assets/common/bg-bright.png") center / cover no-repeat;
+  isolation: isolate;
+}
+
+.suspect-canvas-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #171713 url("/assets/common/bg-dim.png") center / cover no-repeat;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.suspect-canvas-wrap.emotion-hardened::before {
+  opacity: 1;
 }
 
 .suspect-canvas {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: auto;
@@ -449,11 +466,11 @@ button.primary {
   margin-bottom: 56px;
 }
 
-.title-logo-main {
-  margin: 0 0 12px;
-  font-size: 40px;
-  font-weight: bold;
-  letter-spacing: 0.06em;
+.title-logo-image {
+  display: block;
+  width: min(720px, 100%);
+  height: auto;
+  margin: 0 auto 12px;
 }
 
 .title-logo-sub {
