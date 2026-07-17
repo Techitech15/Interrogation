@@ -84,8 +84,14 @@
 | `public/assets/cases/case-001/suspect-001-pose-calm.png`(以下同パターンで `-shaken` / `-hardened` / `-collapsed` の4種) | 事件1容疑者の姿勢差分(通常/前傾/後傾/崩れ) | 900×1200 PNG(透過)、目は描き込まない | シルエットのみ(輪郭・服のディテールはあってよいが顔の造作は描かない)。目の位置に発光を合成する前提で、目周辺は単純な陰影に留める | Canvas手続き描画(頭部楕円+肩台形) | 要新規実装 |
 | `public/assets/cases/case-002/suspect-002-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件2) | 同上 | 同上 | 同上 | 要新規実装 |
 | `public/assets/cases/case-003/suspect-003-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件3) | 同上 | 同上 | 同上 | 要新規実装 |
-| `public/assets/cases/case-004/suspect-004-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件4・隠し事件解放条件あり) | 同上 | 同上 | 同上 | 要新規実装 |
-| `public/assets/cases/case-XXX/suspect-XXX-eyes.json`(4事件分×1ファイルずつ) | 目領域の座標指定メタデータ(下記参照) | JSON | — | 該当なし(目はCanvas側で固定座標に手続き描画) | 要新規実装 |
+| `public/assets/cases/case-004/suspect-004-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件4) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-005/suspect-005-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件5) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-006/suspect-006-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件6) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-007/suspect-007-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件7) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-008/suspect-008-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件8) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-009/suspect-009-pose-{calm,shaken,hardened,collapsed}.png` | 同上(事件9) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-010/suspect-010-pose-{calm,shaken,hardened,collapsed}.png` | 同上(隠し事件10) | 同上 | 同上 | 同上 | 要新規実装 |
+| `public/assets/cases/case-XXX/suspect-XXX-eyes.json`(10事件分×1ファイルずつ) | 目領域の座標指定メタデータ(下記参照) | JSON | — | 該当なし(目はCanvas側で固定座標に手続き描画) | 要新規実装 |
 
 **目のメタデータ方式(提案)**: 目の光は今後もCanvas側で動的合成し続ける(発光量・瞳孔・点滅などをコードで制御するため)。そのため画像側には目を描き込まず、姿勢ごとの目の中心座標・サイズを別JSONで持たせる。座標は画像の幅・高さに対する相対値(0〜1)とし、`suspectCanvas.ts` の既存の相対値計算(`width * 0.055` 等)と同じ考え方に揃える。
 
