@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: full-screen phase divider for a Japanese psychological interrogation adventure
+Primary request: the ending phase, a closed case file left alone after the interrogation room has fallen silent
+Input image: use the attached interrogation-room background as the project visual-style reference
+Scene/backdrop: the same Japanese police interview room before dawn, overhead lamp cooling and the frosted window barely beginning to brighten
+Subject: a closed worn dossier at the center of the dark metal table, analog recorder stopped, empty chairs on opposite sides fading into shadow; the folder has no readable title
+Style/medium: clean HD painted visual-novel key art, restrained cinematic noir realism, quiet painterly finish, not photorealistic and not pixel art
+Composition/framing: wide 16:9, formal centered still life, layered foreground table and deep room, center-safe negative space for separate HTML title text
+Lighting/mood: ambiguous finality rather than triumph, exhausted silence, a thin pale line of dawn against deep shadow
+Color palette: near-black brown #28231a, muted olive #41503f, soft brown #4d453a, paper beige #ece4cf; no vivid accent color
+Constraints: no people, no faces, no legible writing, no text, no labels, no UI, no watermark
+Avoid: sunrise landscape, celebration, police badges, courtroom, weapons, gore, neon, bright saturated colors

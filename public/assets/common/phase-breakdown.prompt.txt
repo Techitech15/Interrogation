@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: full-screen phase divider for a Japanese psychological interrogation adventure
+Primary request: the testimony-breakdown phase, the interrogation room at the instant a carefully maintained lie collapses
+Input image: use the attached interrogation-room background as the project visual-style reference
+Scene/backdrop: same stark Japanese police interview room, overhead lamp swinging slightly, one-way glass swallowed by shadow
+Subject: an empty chair pushed sharply back from the table, a snapped cassette tape unspooling across scattered statement pages, the light fractured by the moving lamp; no person is visible
+Style/medium: clean HD painted visual-novel key art, restrained cinematic noir realism with expressive light and shadow, not photorealistic and not pixel art
+Composition/framing: wide 16:9, off-balance central composition, the tape line and chair angle guide the eye toward center-safe space for separate HTML title text
+Lighting/mood: psychological rupture after prolonged stillness, momentary harsh contrast, dust in the light
+Color palette: near-black brown #28231a, muted olive #41503f, paper beige #ece4cf; a restrained dark stamp-red #a8332a reflected faintly on one torn page only
+Constraints: no people, no body, no face, no readable writing, no typography, no UI, no border, no watermark, no gore
+Avoid: supernatural monsters, shattered glass explosion, blood, weapons, neon, melodramatic anime effects

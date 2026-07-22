@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: full-screen phase divider for a Japanese psychological interrogation adventure
+Primary request: the confrontation phase, two conflicting pieces of testimony and physical evidence forced together on a dark interrogation table
+Input image: use the attached interrogation-room background as the project visual-style reference
+Scene/backdrop: close low-angle view across the same scarred metal table, one-way glass and frosted window reduced to abstract darkness in the distance
+Subject: a monochrome statement sheet, a small evidence photograph, an unlabeled evidence sleeve, and a red pencil laid diagonally where the contradictions intersect; all writing is obscured and unreadable
+Style/medium: clean HD painted visual-novel key art, graphic cinematic noir realism, sharp readable shapes, not photorealistic and not pixel art
+Composition/framing: wide 16:9, strong diagonal collision at center, dark margins and center-safe space for separate HTML title text
+Lighting/mood: sudden focused tension, hard slash of warm light, shadows resembling intersecting bars
+Color palette: near-black brown #28231a, paper beige #ece4cf, muted olive #41503f; use a restrained dark stamp-red #a8332a only on the pencil and one tiny evidence mark
+Constraints: no people, no hands, no faces, no legible text, no labels, no UI, no watermark
+Avoid: explosions, action-comic speed lines, courtroom imagery, guns, blood, neon, bright saturated red

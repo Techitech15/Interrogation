@@ -231,19 +231,6 @@ button.primary {
   font-size: 13px;
 }
 
-.breakdown-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 17, 12, 0.88);
-  color: #e8e0c8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  z-index: 10;
-}
-
 .ending {
   text-align: center;
 }
@@ -459,24 +446,72 @@ button.primary {
 
 .title-screen {
   text-align: center;
-  padding: 64px 32px;
+  min-height: 670px;
+  padding: 72px 32px 40px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--paper);
+  background:
+    linear-gradient(180deg, rgba(17, 16, 13, 0.4), rgba(17, 16, 13, 0.88)),
+    url("/assets/common/bg-dim.png") center / cover no-repeat;
+}
+
+.title-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(14, 13, 11, 0.68), transparent 34%, transparent 66%, rgba(14, 13, 11, 0.68)),
+    radial-gradient(circle at 50% 27%, rgba(236, 228, 207, 0.12), transparent 32%);
 }
 
 .title-logo {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
 }
 
-.title-logo-image {
-  display: block;
-  width: min(720px, 100%);
-  height: auto;
-  margin: 0 auto 12px;
+.title-logo-kicker {
+  margin: 0 0 8px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  color: #cfc5ab;
+}
+
+.title-logo-main {
+  margin: 0;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-size: clamp(92px, 14vw, 148px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  color: #f0e8d3;
+}
+
+.title-logo-roman {
+  width: min(420px, 72%);
+  margin: 22px auto 18px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(236, 228, 207, 0.52);
+  border-bottom: 1px solid rgba(236, 228, 207, 0.52);
+  font-family: "Times New Roman", serif;
+  font-size: 15px;
+  letter-spacing: 0.58em;
+  text-indent: 0.58em;
+  color: #ddd3bb;
 }
 
 .title-logo-sub {
   margin: 0;
-  color: var(--ink-soft);
+  color: #d2c8b0;
   font-size: 14px;
+  letter-spacing: 0.12em;
 }
 
 .title-menu {
@@ -484,19 +519,38 @@ button.primary {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  margin-bottom: 72px;
+  margin-bottom: 56px;
 }
 
 .title-menu-btn {
   width: min(280px, 100%);
   padding: 12px 16px;
   font-size: 15px;
+  color: var(--paper);
+  border-color: rgba(236, 228, 207, 0.55);
+  background: rgba(20, 18, 14, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.title-menu-btn:hover {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.title-screen .title-menu-btn.primary {
+  color: var(--ink);
+  border-color: var(--paper);
+  background: var(--paper);
+}
+
+.title-screen .title-menu-btn.primary:hover {
+  background: #c9bea3;
 }
 
 .title-footnote {
   margin: 0;
   font-size: 12px;
-  color: var(--ink-soft);
+  color: #a99f87;
 }
 
 /* --- Case select screen (SCR-02) --- */
@@ -622,4 +676,139 @@ button.primary {
 .back-to-select-btn {
   margin-top: 16px;
   margin-left: 8px;
+}
+
+/* --- Full-screen phase dividers --- */
+
+.phase-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  color: var(--paper);
+  background: #0d0c0a;
+  animation: phase-transition-reveal 480ms ease-out both;
+}
+
+.phase-transition-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.72) contrast(1.06) brightness(0.84);
+  animation: phase-transition-art-reveal 1400ms ease-out both;
+}
+
+.phase-transition::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(10, 9, 7, 0.9) 0%, rgba(10, 9, 7, 0.42) 42%, transparent 72%),
+    linear-gradient(0deg, rgba(10, 9, 7, 0.76), transparent 58%);
+}
+
+.phase-transition-content {
+  position: absolute;
+  left: clamp(28px, 7vw, 112px);
+  bottom: clamp(32px, 9vh, 96px);
+  z-index: 2;
+  width: min(520px, calc(100% - 56px));
+  padding-left: 24px;
+  border-left: 3px solid var(--stamp);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+}
+
+.phase-transition-number {
+  margin: 0 0 4px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  color: #c6baa0;
+}
+
+.phase-transition-title {
+  margin: 0;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-size: clamp(42px, 5.6vw, 68px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.phase-transition-description {
+  margin: 12px 0 24px;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: #d8ceb7;
+}
+
+.phase-transition-continue {
+  min-width: 210px;
+  padding: 11px 22px;
+  color: var(--paper);
+  border-color: rgba(236, 228, 207, 0.65);
+  background: rgba(18, 16, 12, 0.76);
+  backdrop-filter: blur(4px);
+}
+
+.phase-transition-continue:hover,
+.phase-transition-continue:focus-visible {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.phase-transition-breakdown .phase-transition-art {
+  filter: saturate(0.66) contrast(1.12) brightness(0.78);
+}
+
+@keyframes phase-transition-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes phase-transition-art-reveal {
+  from { transform: scale(1.025); filter: saturate(0.4) contrast(1.12) brightness(0.58); }
+  to { transform: scale(1); }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 0;
+  }
+
+  .title-screen {
+    min-height: calc(100vh - 88px);
+    padding: 56px 22px 28px;
+  }
+
+  .title-logo-main {
+    font-size: clamp(72px, 28vw, 108px);
+  }
+
+  .title-logo-roman {
+    width: min(360px, 88%);
+  }
+
+  .phase-transition::before {
+    background:
+      linear-gradient(0deg, rgba(10, 9, 7, 0.92) 0%, rgba(10, 9, 7, 0.38) 64%, transparent 100%);
+  }
+
+  .phase-transition-content {
+    left: 24px;
+    right: 24px;
+    bottom: 32px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phase-transition,
+  .phase-transition-art {
+    animation: none;
+  }
 }

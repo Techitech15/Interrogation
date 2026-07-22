@@ -17,6 +17,8 @@ import { createSuspectView } from "./suspectCanvas";
 import type { SuspectView } from "./suspectCanvas";
 import { renderSettingsScreen } from "./settingsScreen";
 import type { OllamaStatus, SettingsScreenActions, SettingsScreenState } from "./settingsScreen";
+import { renderPhaseTransition } from "./phaseTransition";
+import type { PhaseSceneId } from "./phaseTransition";
 import { renderCaseSelectScreen, renderTitleScreen } from "./titleScreen";
 import type { CaseSelectCardVm } from "./titleScreen";
 import { AIProviderRouter } from "../ai/AIProviderRouter";
@@ -31,7 +33,7 @@ interface UiState {
   bundle: CaseBundle;
   game: GameState;
   selectedTestimonyTurn: number | null;
-  breakdownMessage: string | null;
+  breakdownPending: boolean;
   settings: Settings;
   settingsOpen: boolean;
   settingsApiKeyDraft: string;
@@ -82,6 +84,8 @@ let root: HTMLElement;
 let suspectView: SuspectView | null = null;
 let suspectCanvasWrap: HTMLElement | null = null;
 let audioInitialized = false;
+let phaseScene: PhaseSceneId | null = null;
+let phaseSceneContinue: (() => void) | null = null;
 
 export function mountApp(rootEl: HTMLElement): void {
   root = rootEl;
@@ -93,7 +97,7 @@ export function mountApp(rootEl: HTMLElement): void {
     bundle,
     game: createInitialGameState(bundle),
     selectedTestimonyTurn: null,
-    breakdownMessage: null,
+    breakdownPending: false,
     settings,
     settingsOpen: false,
     settingsApiKeyDraft: settings.geminiApiKey,
@@ -135,27 +139,48 @@ function el<K extends keyof HTMLElementTagNameMap>(
 }
 
 function goToTitle(): void {
+  clearPhaseScene();
   ui.screen = "title";
   stopBgm();
   render();
 }
 
 function goToCaseSelect(): void {
+  clearPhaseScene();
   ui.screen = "caseSelect";
   stopBgm();
   render();
 }
 
 function startCase(caseId: string): void {
+  clearPhaseScene();
   ui.bundle = loadCase(caseId);
   ui.game = createInitialGameState(ui.bundle);
   ui.selectedTestimonyTurn = null;
-  ui.breakdownMessage = null;
+  ui.breakdownPending = false;
   ui.aiFallbackNotice = null;
   suspectView?.setSuspect(ui.bundle.suspect.suspectId);
   suspectView?.setEmotion(ui.game.emotionState);
   ui.screen = "game";
+  showPhaseScene("briefing", () => render());
+}
+
+function clearPhaseScene(): void {
+  phaseScene = null;
+  phaseSceneContinue = null;
+}
+
+function showPhaseScene(phase: PhaseSceneId, onContinue: () => void): void {
+  phaseScene = phase;
+  phaseSceneContinue = onContinue;
   render();
+}
+
+function continuePhaseScene(): void {
+  const onContinue = phaseSceneContinue;
+  clearPhaseScene();
+  if (onContinue) onContinue();
+  else render();
 }
 
 function render(): void {
@@ -180,7 +205,7 @@ function render(): void {
     );
   } else if (ui.game.currentPhase === "briefing") {
     container.appendChild(renderBriefing());
-  } else if (ui.game.currentPhase === "ending" && !ui.breakdownMessage) {
+  } else if (ui.game.currentPhase === "ending" && !ui.breakdownPending) {
     container.appendChild(renderEnding());
   } else {
     // Show the breakdown overlay first even if this confrontation also
@@ -193,6 +218,10 @@ function render(): void {
   if (ui.settingsOpen) {
     root.appendChild(renderSettingsOverlay());
   }
+
+  if (phaseScene) {
+    root.appendChild(renderPhaseTransition(phaseScene, continuePhaseScene));
+  }
 }
 
 function renderHeader(): HTMLElement {
@@ -202,7 +231,7 @@ function renderHeader(): HTMLElement {
   const h1 = el("h1");
   const titleBtn = el("button", {
     className: "app-header-title-btn",
-    text: "尋問 -JINMON- (プロトタイプ)",
+    text: "尋問 / JINMON",
   });
   titleBtn.type = "button";
   titleBtn.setAttribute("aria-label", "タイトルへ戻る");
@@ -317,8 +346,10 @@ function renderBriefing(): HTMLElement {
   const startBtn = el("button", { className: "primary", text: "尋問を開始する" });
   startBtn.addEventListener("click", () => {
     ui.game = startInterrogation(ui.game);
-    startBgm("interrogation");
-    render();
+    showPhaseScene("interrogation", () => {
+      startBgm("interrogation");
+      render();
+    });
   });
   section.appendChild(startBtn);
   return section;
@@ -330,10 +361,6 @@ function renderInterrogation(): HTMLElement {
   wrap.appendChild(renderSuspectPanel());
   wrap.appendChild(renderDialoguePanel());
   wrap.appendChild(renderEvidencePanel());
-
-  if (ui.breakdownMessage) {
-    wrap.appendChild(renderBreakdownOverlay());
-  }
 
   return wrap;
 }
@@ -499,7 +526,8 @@ function renderTestimonyLog(): HTMLElement {
         const wasSelected = ui.selectedTestimonyTurn === entry.turn;
         ui.selectedTestimonyTurn = wasSelected ? null : entry.turn;
         if (!wasSelected) playSe("confront_select");
-        render();
+        if (wasSelected) render();
+        else showPhaseScene("confrontation", () => render());
       });
       item.appendChild(selectBtn);
     }
@@ -551,28 +579,28 @@ async function handleConfront(evidenceId: string): Promise<void> {
     if (suspectView) {
       await suspectView.playBreakdown();
     }
-    ui.breakdownMessage = "供述が崩れた……。";
-    afterGameStateChange();
+    ui.breakdownPending = true;
+    // Persist a finishing confrontation before the player advances through
+    // the two-part breakdown -> ending presentation.
+    if (ui.game.currentPhase === "ending" && ui.game.endingId) {
+      recordEnding(ui.game.caseId, ui.game.endingId);
+    }
     startBgm("silence");
+    showPhaseScene("breakdown", () => {
+      ui.breakdownPending = false;
+      suspectView?.resetPose();
+      if (ui.game.currentPhase === "ending") {
+        showEndingPhase();
+      } else {
+        startBgm("interrogation");
+        render();
+      }
+    });
     return;
   }
 
   playSe("confront_fail");
   afterGameStateChange();
-}
-
-function renderBreakdownOverlay(): HTMLElement {
-  const overlay = el("div", { className: "breakdown-overlay" });
-  overlay.appendChild(el("p", { text: ui.breakdownMessage ?? "" }));
-  const continueBtn = el("button", { text: "続ける" });
-  continueBtn.addEventListener("click", () => {
-    ui.breakdownMessage = null;
-    suspectView?.resetPose();
-    startBgm("interrogation");
-    render();
-  });
-  overlay.appendChild(continueBtn);
-  return overlay;
 }
 
 function playEndingSe(endingId: EndingId): void {
@@ -596,10 +624,10 @@ function renderEnding(): HTMLElement {
   restartBtn.addEventListener("click", () => {
     ui.game = createInitialGameState(ui.bundle);
     ui.selectedTestimonyTurn = null;
-    ui.breakdownMessage = null;
+    ui.breakdownPending = false;
     suspectView?.resetPose();
     suspectView?.setEmotion(ui.game.emotionState);
-    render();
+    showPhaseScene("briefing", () => render());
   });
   section.appendChild(restartBtn);
 
@@ -611,13 +639,21 @@ function renderEnding(): HTMLElement {
   return section;
 }
 
-function afterGameStateChange(): void {
-  if (ui.game.currentPhase === "ending" && ui.game.endingId) {
+function showEndingPhase(): void {
+  if (ui.game.endingId) {
     recordEnding(ui.game.caseId, ui.game.endingId);
     playEndingSe(ui.game.endingId);
   }
+  showPhaseScene("ending", () => render());
+}
 
-  if (ui.game.currentPhase === "interrogation" && !ui.breakdownMessage) {
+function afterGameStateChange(): void {
+  if (ui.game.currentPhase === "ending") {
+    showEndingPhase();
+    return;
+  }
+
+  if (ui.game.currentPhase === "interrogation" && !ui.breakdownPending) {
     startBgm(ui.game.emotionState === "shaken" ? "tension" : "interrogation");
   }
 

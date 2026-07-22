@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: full-screen phase divider for a Japanese psychological interrogation adventure
+Primary request: the interrogation phase, an empty suspect chair isolated beneath a single hanging lamp in a stark police interview room
+Input image: use the attached interrogation-room background as the project visual-style reference
+Scene/backdrop: one-way observation glass, high frosted window, worn olive-gray acoustic panels, a dark metal table edge in the foreground
+Subject: the empty chair and the hard oval of light where a faceless suspect will soon sit; no person is present
+Style/medium: clean HD painted visual-novel key art, restrained cinematic noir realism, subtle film grain, not photorealistic and not pixel art
+Composition/framing: wide 16:9, symmetrical interrogator viewpoint, strong central vanishing point, center-safe negative space for separate HTML title text
+Lighting/mood: claustrophobic, watchful, unnervingly still, strong warm backlight surrounded by deep shadow
+Color palette: near-black brown #28231a, muted olive #41503f, soft brown #4d453a, restrained paper-beige light #ece4cf
+Constraints: no people, no silhouette, no glowing eyes, no text, no labels, no UI, no watermark
+Avoid: prison bars, courtroom, weapons, gore, neon, colorful lighting, anime character art

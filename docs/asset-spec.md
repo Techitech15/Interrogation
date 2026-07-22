@@ -3,23 +3,24 @@
 - 本書の目的: 本番アセット制作(画像生成ツール「Codex」による差し替え作業)に必要な情報を**この1ファイルだけ**で完結させる。
 - 前提資料: `docs/detailed-design.md` 7章(アセット仕様)・3.4節(目の光演出)。齟齬がある場合は本書が実装コード(`src/ui/suspectCanvas.ts` 等)を直接確認して書いた最新情報を優先する。
 - 対象読者: Codex(画像生成の実行者)、および差し替えコードを書く実装者。
-- ステータス: Draft v1.0(2026-07-15作成。全アセットが仮実装/未実装の段階での初版)
+- ステータス: v1.1(2026-07-22更新。P0アセットとフェーズ区切り一枚絵を実装済み)
 
 ---
 
-## 0. 現状サマリ(このリポジトリに実アセットは1つも無い)
+## 0. 現状サマリ
 
-作業に入る前に、現状の実装を正確に把握しておく。**すべて「仮」または「未実装」であり、本物の画像ファイルはまだ存在しない。**
+P0アセットとフェーズ区切り一枚絵は実装済み。証拠画像・現場写真・OGP・紙テクスチャは引き続き未実装。
 
 | 要素 | 現状 |
 |---|---|
-| 取調室背景 | 画像なし。`.suspect-canvas-wrap` に CSS の斜めストライプ (`repeating-linear-gradient`) を仮表示しているのみ(`src/style.css` 106-113行、538-540行付近に同種のストライプがもう1箇所ある) |
-| 容疑者シルエット | 画像なし。`src/ui/suspectCanvas.ts` が `<canvas>` 上に頭部(楕円)+肩(台形)+目(発光楕円)を**毎フレーム手続き描画**している。`suspectId` や事件ごとの見た目の差は一切ない(4事件すべて同じ絵)。目の光量・瞳孔・傾きは `EmotionState`("calm"/"shaken"/"hardened")に応じてJSで数値制御 |
+| 取調室背景 | `bg-bright.png` / `bg-dim.png` を実装済み。尋問画面とタイトル画面で使用 |
+| 容疑者シルエット | case-001〜010の4ポーズと目座標JSONを実装済み。`suspectCanvas.ts` が事件・感情に応じて切り替える |
 | 証拠カード画像 | 全事件・全証拠の `imageAsset` は `"placeholder-evidence.svg"` 固定(実体は `public/assets/placeholder-evidence.svg`)。**ただし `src/ui/app.ts` の証拠カード描画(514-527行)は `evidence.name` と `evidence.description` のテキストしか出しておらず、`imageAsset` はコード上どこからも参照されていない = 画像は現在UIに一切表示されない** |
-| 現場写真 | 全4事件の `case.json` の `briefing.scenePhotos` は例外なく `[]`(空配列)。ファイル名すら1件も登録されておらず、表示UIも未実装 |
-| タイトルロゴ | 画像なし。`src/ui/titleScreen.ts` 39-43行で `<p class="title-logo-main">尋問 -JINMON-</p>` をテキストとしてCSSスタイリング表示しているのみ |
-| favicon | 画像なし。`index.html` 7行目にデータURI SVG(`viewBox 0 0 32 32`、背景 `#28231a`、赤字 `#a8332a` で「尋」の一文字)をインライン記述 |
-| アプリアイコン(Electron) | 未設定。`electron/main.cjs` にアイコン指定なし。`package.json` に `electron-builder` 用の `build.icon` 設定自体が存在しない |
+| 現場写真 | 全10事件の `briefing.scenePhotos` は空配列で、表示UIも未実装 |
+| タイトル | 明朝体の「尋問 / JINMON」をHTML/CSSで正確に描画し、`bg-dim.png`を逆光のキービジュアルとして使用。旧`title-logo.png`は未使用 |
+| フェーズ区切り | briefing / interrogation / confrontation / breakdown / ending の16:9一枚絵5点を実装済み |
+| favicon | `public/favicon.png` を実装済み |
+| アプリアイコン(Electron) | `app-icon-512.png`を実装し、`package.json`の各OS向けビルド設定で参照済み |
 | OGP画像 | なし(`index.html` に `og:image` 等のメタタグ自体が無い) |
 | 紙テクスチャ | なし。`.dossier-frame`(`src/style.css` 23-28行)は単色 `var(--paper)` 背景のみ |
 
@@ -152,13 +153,27 @@
 - 制作指示: 各事件の `case.json` の `briefing.autopsyReport` / `initialMemo` に記述された現場状況(密室の居間、工具箱の散乱した作業場、懇親会の席、河川敷の遊歩道)に沿ったモノクロ〜低彩度の「捜査資料写真」風。人物の顔がはっきり写らない構図にする(ネタバレ回避)。
 - 依存関係: **`briefing.scenePhotos` にファイル名を追記するデータ変更、および事件ファイル閲覧画面(SCR-03)への表示UI実装の両方が未着手。画像制作は先行できるが、組み込みはUI実装後になる。**
 
-### 2.5 タイトルロゴ
+### 2.5 タイトル画面
 
 | ファイルパス(配置先) | 用途 | サイズ・形式 | 制作指示 | 現在の仮実装 | コード変更要否 |
 |---|---|---|---|---|---|
-| `public/assets/common/title-logo.png`(または `.svg`) | タイトル画面ロゴ(`title-logo-main` 相当の置き換え) | 横長、推奨2000×600程度(比率3.3:1目安、透過PNG) | 「尋問 -JINMON-」の文字を活かしたロゴタイプ。取調室の光と影のモチーフ(スポットライト、影の格子など)を軽く添えてよいが、視認性優先で背景と衝突しないシンプルさを保つ | `<p class="title-logo-main">尋問 -JINMON-</p>` のテキストCSS表示 | 小規模 |
+| `public/assets/common/bg-dim.png` | タイトル画面キービジュアル | 1920×1080 PNG | 逆光の取調室。文字を焼き込まず、中央のタイトルが読める暗部を確保 | HTML/CSSの明朝体タイトルと組み合わせて実装済み | 不要 |
 
-- コード変更の内容: `src/ui/titleScreen.ts` 39-43行の `el("p", ...)` によるテキスト描画を `<img>` 要素に置き換える必要がある(数行の変更)。
+- 旧`title-logo.png`の筆文字・印影は作品の無機質な心理サスペンス感と合わないため、表示から外した。タイトル文字は画像生成に焼き込まず、`src/ui/titleScreen.ts`と`src/style.css`で「尋問」「JINMON」を明朝体・罫線・広い字間で正確に描画する。
+
+### 2.5-A フェーズ区切り一枚絵
+
+| ファイルパス | フェーズ | サイズ・形式 | 主なモチーフ |
+|---|---|---|---|
+| `public/assets/common/phase-briefing.webp` | briefing | 1600×900 WebP | 開かれた事件ファイル、現場写真、録音機 |
+| `public/assets/common/phase-interrogation.webp` | interrogation | 1600×900 WebP | 裸電球の下の空席、曇りガラス |
+| `public/assets/common/phase-confrontation.webp` | confrontation | 1600×900 WebP | 交差する供述書・証拠写真・赤鉛筆 |
+| `public/assets/common/phase-breakdown.webp` | breakdown | 1600×900 WebP | 押し退けられた椅子、ほどけた録音テープ |
+| `public/assets/common/phase-ending.webp` | ending | 1600×900 WebP | 閉じた事件ファイル、停止した録音機 |
+
+- 全画像は文字なし。フェーズ名・説明・続行ボタンは`src/ui/phaseTransition.ts`で重ね、可読性とアクセシビリティを維持する。
+- 各画像の生成プロンプトは同名の`.prompt.txt`として隣接配置する。
+- `art-runs/jinmon-phase-scenes/process_phase_art.py`で16:9・1600×900・500KB以下へ正規化する。
 
 ### 2.6 favicon / アプリアイコン
 
@@ -235,7 +250,7 @@
 
 | 優先度 | 対象 | 補足 |
 |---|---|---|
-| P0(公開に必須) | 容疑者シルエット(2.2・16ポーズ+目座標JSON4件)、取調室背景(2.1・2枚)、タイトルロゴ(2.5)、favicon/アプリアイコン(2.6) | いずれも現状「画像0点」の状態。P0はコード変更(4.2節含む)とセットで進める前提 |
+| P0(実装済み) | 容疑者シルエット(case-001〜010・各4ポーズ+目座標JSON)、取調室背景(2枚)、タイトル画面、フェーズ一枚絵(5枚)、favicon/アプリアイコン | 2026-07-22時点でゲームへ組み込み済み |
 | P1(UI実装後) | 証拠カード画像(2.3・18点)、現場写真(2.4・8点) | 画像制作自体は先行して着手できるが、組み込みには証拠カードUI・SCR-03写真表示UIの実装が先に必要 |
 | P2(低優先) | 紙テクスチャ(2.8・1点)、OGP画像(2.7・1点) | OGPは公開直前でも間に合う。紙テクスチャは無くても支障がない装飾 |
 
@@ -245,4 +260,5 @@
 
 | バージョン | 日付 | 内容 |
 |---|---|---|
+| v1.1 | 2026-07-22 | P0アセットの実装状況へ更新。タイトルを明朝体+逆光背景へ再設計し、5フェーズの区切り一枚絵と組み込み仕様を追加 |
 | v1.0 | 2026-07-15 | 初版作成。`docs/detailed-design.md` 7章・3.4節、および実装コード(`suspectCanvas.ts` / `style.css` / `app.ts` / `titleScreen.ts` / 各 `case.json` / `evidence.json` / `index.html`)の現状調査に基づき、`public/assets/README.md` の差し替え方針メモを統合 |

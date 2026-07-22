@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: full-screen phase divider for a Japanese psychological interrogation adventure
+Primary request: the briefing phase, an opened criminal case file seen from a slightly elevated investigator viewpoint on a scarred dark metal desk
+Input image: use the attached interrogation-room background as the project visual-style reference
+Scene/backdrop: sparse Japanese police interview room, the single overhead lamp creates a hard pool of warm backlight; beyond it, the room disappears into olive-black shadow
+Subject: an aged paper dossier, clipped monochrome scene photographs with no visible faces, a small evidence envelope, redacted lines, and a silent analog recorder; all written content is too small or obscured to read
+Style/medium: clean HD painted visual-novel key art, restrained cinematic noir realism, subtle paper grain, not photorealistic and not pixel art
+Composition/framing: wide 16:9 composition, central focal object, dark quiet margins, generous clean center-safe area for separate HTML title text
+Lighting/mood: ominous procedural stillness, backlit dust, severe contrast
+Color palette: paper beige #ece4cf, near-black brown #28231a, muted olive #41503f, soft brown #4d453a; no vivid colors
+Constraints: no people, no hands, no faces, no legible writing, no typography, no labels, no UI, no border, no watermark
+Avoid: detective-cliche corkboards, police badges, guns, gore, bright blue cyberpunk light, anime characters
